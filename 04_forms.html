@@ -1,0 +1,204 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="Forms & Associative Arrays">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title>Forms!</title>
+  <script type="text/javascript">
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <style type="text/css">
+  .token.operator{ background:none; }
+  .reveal em, .reveal strong{
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <section>
+          <h1><strong>Forms</strong></h1>
+          <p>& Associative arrays</p>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h3><em>Loopar</em></h3>
+        </section>
+        <section>
+          <pre><code class="language-php">for($i = 0; $i < 10; $i++){
+  echo $i;
+}</code></pre>
+        <p class="fragment fade-down">Ser nästan alltid ut likadan oavsett språk</p>
+        </section>
+        <section>
+          <pre><code class="language-php">while(true){
+  echo "What?";
+}</code></pre>
+        <p class="fragment fade-down">Körs så länge <em>condition</em> stämmer</p>
+
+        </section>
+        <section>
+          <pre><code class="language-php">do{
+  echo "What?";
+} while(false);</code></pre>
+        <p class="fragment fade-down">Körs en gång även om <em>condition</em> inte stämmer</p>
+        </section>
+        <section>
+          <pre><code class="language-php">foreach($numbers as $number){
+  echo $number;
+}</code></pre>
+        <p class="fragment fade-down">Specifik för PHP, finns varianter i andra språk</p>
+        </section>
+        <section>
+          <p><strong>start</strong></p>
+          <p><strong>stopp</strong></p>
+          <p><strong>ökning</strong></p>
+          <p class="fragment fade-down">Har vi en array, måste vi ofta använda en loop</p>
+        </section>
+        <section>
+          <p>Vi kan kombinera hur som helst</p>
+          <pre><code class="language-php">for($i = 0; $i < 10; $i++){
+  for($j = 0; $j < 10; $j++){
+      echo $i;
+      echo $j;
+  }
+}</code></pre>
+        <p class="fragment fade-down">while i for-loop, for i while? If i for? if i if? for i else?</p>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h3><em>Arrays</em></h3>
+        </section>
+        <section>
+          <p><em>Indexerad array: automatisk nyckel</em></p>
+          <pre><code class="language-php">$numbers = array(5, 23, 4);
+
+echo $numbers[0]; //5
+echo $numbers[1]; //23
+echo $numbers[2]; //4</code></pre>
+          <p class="fragment fade-down"><em>key</em>: <strong>value</strong></p>
+          <p class="fragment fade-down">Som i css ~ <em>property</em> : <strong>value</strong></p>
+        </section>
+        <section>
+          <p><em>Associative Array</em></p>
+          <p>Nycklarna behöver inte vara <em>index</em></p>
+          <pre class="fragment fade-down"><code class="language-php">$info = array("username" => "zero_cool");</code></pre>
+          <p class="fragment fade-down">Istället för <code><em>[0]</em></code> ger vi platsen ett namn</p>
+          <pre class="fragment fade-down"><code class="language-php">echo $info["username"]; //zero_cool</code></pre>
+        </section>
+        <section>
+          <pre><code class="language-php">$numbers = array(5,6);</code></pre>
+          <pre><code class="language-php">$numbers = array("first" => 5, "second" => 6);</code></pre>
+          <p class="fragment fade-down">Blanda inte ihop, använd antingen enbart index, eller använd enbart namn på nycklarna</p>
+          <p class="fragment fade-down"><strong> <code>key => value</code></strong> </p>
+        </section>
+        <section>
+          <p>Det finns massvis av hjälpfunktioner för arrayer</p>
+          <pre><code class="language-php">$numbers = array(5,6,2);
+$sum = 0;
+for($i = 0; $i < count($numbers); i++){
+  $sum += $i;
+}
+echo $sum;</code></pre>
+        <pre class="fragment fade-down"><code class="language-php">$numbers = array(5,6,2);
+$sum = array_sum($numbers);</code></pre>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h3><em>Forms</em></h3>
+        </section>
+        <section>
+          <p>Alla formulär i HTML fungerar by default med PHP</p>
+          <p class="fragment fade-down">Formulär är inställda på att skicka iväg innehållet till en <strong>php-fil</strong></p>
+          <p class="fragment fade-down">Vi behöver dock berätta <em>var</em> & <em>hur</em> informationen ska skickas</p>
+        </section>
+        <section>
+          <pre><code class="language-html">&lt;form action=&quot;form.php&quot; method=&quot;POST&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;username&quot; /&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Skicka&quot; /&gt;
+&lt;/form&gt;</code></pre>
+        <p class="fragment fade-down">Varje formulär vill ha en <strong>action</strong> och <em>method</em></p>
+        <p class="fragment fade-down">Samt <code><em>&lt;input&gt;</em></code> för varje värde som ska skickas</p>
+        </section>
+        <section>
+          <p><code>action</code> är viktigt</p>
+          <p><code>method</code> är viktigt</p>
+          <p><code>name</code> på inputfält är viktigt</p>
+          <p class="fragment fade-down">Har vi detta kan vi lagra informationen på rätt sätt</p>
+        </section>
+        <section>
+          <h3><strong>Superglobals</strong></h3>
+        </section>
+        <section>
+          <p><code><em>$_POST</em></code> är en såkallad superglobal</p>
+          <p class="fragment fade-down">Informationen du skickar med formuläret lagras <strong>automatiskt</strong> i <em><code>$_POST</code></em></p>
+          <p class="fragment fade-down">Men i den filen du skickar informationen till</p>
+        </section>
+        <section>
+          <p>Vi kan även skicka med metoden <code><em>GET</em></code></p>
+          <p class="fragment fade-down">Skillnaden är att informationen lagras i <code><strong>$_GET</strong></code></p>
+          <pre><code class="language-php">&lt;form action=&quot;form.php&quot; method=&quot;GET&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;username&quot; /&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Skicka&quot; /&gt;
+&lt;/form&gt;</code></pre>
+        <pre class="fragment fade-down"><code class="language-php">echo $_GET["username"];</code></pre>
+        </section>
+      </section>
+
+      <section>
+        <h3><em>Övningar uppe på zenit</em></h3>
+        <p>Finns extraövningar gällande loopar</p>
+        <p>Inlämningsuppgiften kommer upp imorgon</p>
+        <p class="fragment fade-down">Kolla närmare på Arrayfunktioner & datumfunktioner</p>
+        <p class="fragment fade-down">Imorgon kommer vi in på vad en funktion egentligen är</p>
+      </section>
+      
+
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '90%',
+      width: '70%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js',condition: function (){
+        return !document.body.classList;}},
+        { src: 'plugin/notes/notes.js', async: true },
+        {src : 'lib/prismjs/prism.js'},
+        {src : 'js/print.js'}
+        ]
+      });
+    </script>
+  </body>
+  </html>

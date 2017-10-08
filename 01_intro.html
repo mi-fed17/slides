@@ -1,0 +1,158 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="Dynamisk Webbutveckling Intro">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title>Dynamisk Webbutveckling </title>
+  <script type="text/javascript">
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <style type="text/css">
+    .token.operator{ background:none; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      
+      <section>
+        <section>
+          <h1><strong>Dynamisk Webbutveckling</strong></h1>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h4>Allting på internet är tillgångar</h4>
+          <ul>
+            <li class="fragment fade-down">Bilder</li>
+            <li class="fragment fade-down">Videos</li>
+            <li class="fragment fade-down"><code><em>HTML</em></code></li>
+            <li class="fragment fade-down"><code><em>CSS</em></code></li>
+          </ul>
+          <p class="fragment fade-down">Statiska tillgångar</p>
+        </section>
+        <section>
+          <p><code><em>PHP</em></code> är en dynamisk tillgång</p>
+          <p class="fragment fade-down">Eller snarare, ett <strong>backend</strong>-språk</p>
+          <p class="fragment fade-down">Körs via en server, <strong>måste utvärderas</strong></p>
+        </section>
+        <section>
+          <p>Vad som ska utvärderas och hur det ska utvärderas</p>
+          <p>Måste vi skriva själva</p>
+          <p class="fragment fade-down">och det skapar sidan</p>
+          <p class="fragment fade-down">=</p>
+          <p class="fragment fade-down">Programmering</p>
+        </section>
+        <section>
+          <h4><strong>PHP konverteras alltid till HTML</strong></h4>
+        </section>
+      </section>
+
+
+      <section>
+        <section>
+          <h3><em>Kursens innehåll</em></h3>
+        </section>
+        <section>
+          <p><strong>Bygga hemsidor??</strong></p>
+          <p class="fragment fade-down">Mål: skapa en blogg i PHP</p>
+          <p class="fragment fade-down">Lära oss Wordpress 🤡</p>
+        </section>
+        <section>
+          <ul>
+            <li class="fragment fade-down">Programmera i PHP</li>
+            <li class="fragment fade-down">Autentisering & användarhantering</li>
+            <li class="fragment fade-down">Databashantering, spara information om användaren</li>
+            <li class="fragment fade-down">Best practice och säkerhet</li>
+          </ul>
+        </section>
+        <section>
+          <p><em>Examination</em></p>
+          <ul>
+            <li class="fragment fade-down"><em>3 individuella</em></li>
+            <li class="fragment fade-down"><em>En större gruppuppgift</em></li>
+          </ul>
+        </section>
+        <section>
+          <p><em>Generellt upplägg</em></p>
+          <p class="fragment fade-down">Förmiddagar: genomgång</p>
+          <p class="fragment fade-down">Eftermiddagar: koda som fan</p>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h3><em>Webbserver</em></h3>
+        </section>
+        <section>
+          <p>En server måste sättas upp för att köra PHP</p>
+          <ul>
+            <li>Apache</li>
+            <li>nginx</li>
+          </ul>
+          <p class="fragment fade-down">Senare måste vi även ha en databas för att spara all vår information</p>
+        </section>
+        <section>
+          <p>Smarta lösningar</p>
+          <ul>
+            <li>MAMP</li>
+            <li>WAMP</li>
+            <li>XAMPP</li>
+          </ul>
+          <p class="fragment fade-down">Dessa 3 skapar allting åt oss, vi behöver en av dem.</p>
+        </section>
+        <section>
+          <p>En server behöver man alltid komma åt via en webbadress</p>
+          <p class="fragment fade-down"><a href="https://jesperorb.com">https://jesperorb.com</a></p>
+          <p class="fragment fade-down">Vill vå komma åt servern lokalt har vi:</p>
+          <p class="fragment fade-down"><code><em>http://localhost</em></code></p>
+        </section>
+      </section>
+      <section>
+        <section>
+          <p>Information finns på er portal</p>
+          <p><code><strong>00_installation.pdf</strong></code></p>
+          <p><code><strong>01_intro.pdf</strong></code></p>
+        </section>
+      </section>
+
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'fade',
+      height: '90%',
+      width: '70%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js',condition: function (){
+        return !document.body.classList;}},
+      { src: 'plugin/notes/notes.js', async: true },
+      {src : 'lib/prismjs/prism.js'},
+      {src : 'js/print.js'}
+      ]
+    });
+  </script>
+</body>
+</html>

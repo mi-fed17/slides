@@ -1,0 +1,197 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+<!--   <base href="file:///Users/jesperorb/projects/revealjs/">
+ -->  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="Loops">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title>Loops</title>
+  <script type="text/javascript">
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <style type="text/css">
+  .token.operator{ background:none; }
+  .reveal em, .reveal strong{
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <section>
+          <h1><strong>Loops</strong></h1>
+        </section>
+        <section>
+          <video src="sleepy.mp4" autoplay></video>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <p>Olika sorters loopar</p>
+          <ul>
+            <li class="fragment fade-down"><code><em>while</em></code>
+              <ul>
+                <li>När du inte vet hur länge du ska loopa</li>
+              </ul></li>
+            <li class="fragment fade-down"><code><em>do while</em></code>
+              <ul><li>Körs minst en gång, sen vet vi inte hur länge</li></ul></li>
+            <li class="fragment fade-down"><code><em>for</em></code>
+              <ul><li>
+                När du vet exakt hur länge du ska loopa
+              </li></ul></li>
+          </ul>
+        </section>
+        <section>
+          <p><code><em>for</em> loop</code></p>
+          <pre><code class="language-php">for($i = 0; $i < 10; $i = $i + 1){
+  echo $i;
+}</code></pre> 
+        <p class="fragment fade-down">Kör det som är innanför <code><strong>{}</strong></code> så här många gånger</p>
+        </section>
+        <section>
+          <p><code><em>for</em></code></p>
+          <ul>
+            <li class="fragment fade-down">
+              <code><em>$i = 0;</em></code>
+              <ul><li>Variabel som håller koll på hur länge vi ska loopa</li></ul>
+            </li>
+            <li class="fragment fade-down">
+              <code><em>$i < 10;</em></code>
+              <ul><li>Så länge $i är mindre än 10, kör loopen</li></ul>
+            </li>
+            <li class="fragment fade-down">
+              <code><em>$i = $i + 1;</em></code>
+              <ul><li>Öka värdet på $i med 1 varje gång</li></ul>
+            </li>
+          </ul>
+          
+        </section>
+        <section>
+          <p>Skapandet av variablen och ökningen sker inuti loopen</p>
+          <pre><code class="language-php">for($i = 0; $i < 10; $i = $i + 1){
+  echo $i;
+}</code></pre>
+        <p class="fragment fade-down">Innanför <code>{}</code> är koden som ska köras, innanför <code><em>()</em></code> är villkoret som ska utvärderas</p>
+        </section>
+        <section>
+          <p><code><em>$i < 10</em></code> <-- vi vet att loopen ska köras 10 gånger </p>
+          <p class="fragment fade-down">När vi inte vet: <code><em>while()</em></code></p>
+          <p class="fragment fade-down">En <code><em>while</em></code> körs så länge ett condition är sant, som en if-sats</p>
+          <p class="fragment fade-down"><strong>MAN MÅSTE SE TILL SÅ ATT VÅRT CONDITION BLIR FALSKT</strong> </p>
+        </section>
+        <section>
+          <pre><code class="language-php">$num = 10;
+while($num > 0){
+  echo $num;
+  $num = $num - 1; //Räknaren måste alltid ändras
+}</code></pre>
+        <p class="fragment fade-down">Annars hamnar vi en oändlig loop</p>
+        </section>
+        <section>
+          <p><strong>Oberoende av vilken typ av loop och programmeringsspråk</strong></p>
+          <ul>
+            <li>En räknare</li>
+            <li>Ett villkor som ska uppfyllas</li>
+            <li>En ökning av räknaren</li>
+          </ul>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h3><strong>Arrayer</strong></h3>
+        </section>
+        <section>
+          <p>Oftast kombinerar vi loopar med konceptet av arrayer</p>
+          <p class="fragment fade-down"><em>Arrayer är samlingar av variabler</em></p>
+        </section>
+        <section>
+          <p>Skapar en tom array: <code><em>array()</em></code></p>
+          <pre><code class="language-php">$my_array = array();</code></pre>
+          <p class="fragment fade-down">Skapa en array med värden</p>
+          <pre class="fragment fade-down"><code class="language-php">$my_array = array( 5 , 6 );</code></pre>
+        </section>
+        <section>
+          <p>Vi kommer åt värden i en array genom att peka på deras plats</p>
+          <pre><code class="language-php">$my_array = array( 5, 6);
+echo $my_array[0]; //echoes 5
+echo $my_array[1]; //echoes 6</code></pre>
+          <p class="fragment fade-down">Första platsen i en array har alltid <code><em>0</em></code></p>
+          <p class="fragment fade-down">Vi säger: <strong>index 0</strong></p>
+        </section>
+        <section>
+          <p>En array kan innehålla vadsomhelst men vi vill oftast hålla oss till samma typ</p>
+          <pre><code class="language-php">$my_array = array("Hello!", true, 56); //this is ok</code></pre>
+          <pre class="fragment fade-down"><code class="language-php">$my_array = array("Hello!", "Hello again", "Not hello");</code></pre>  
+          <pre class="fragment fade-down"><code class="language-php">$my_array = array(45, 67, 12);</code></pre>  
+          <p class="fragment fade-down">Men vi vill att en array ska ha samma typer</p>
+        </section>
+        <section>
+          <p><em>Arrayer</em></p>
+          <p>När du vill lagra flera värden som hör ihop</p>
+          <pre><code class="language-php">$names = array("Steffe", "Ursula", "Manuel");</code></pre>
+          <p class="fragment fade-down">För att komma åt VÄRDET använder du INDEX</p>
+          <pre><code class="language-php">$names[1] = "Ursula";</code></pre>
+        </section>
+        <section>
+          <p>Detta använder vi i kombination med loopar</p>
+          <p class="fragment fade-down"><code><em>index</em></code> i en array är 0,1,2,3,4...</p>
+          <p class="fragment fade-down"><code><em>$i</em></code> när vi loopar är 0,1,2,3,4...</p>
+        </section>
+
+        <section>
+
+          <pre><code class="language-php">$names = array("Steffe", "Inte Steffe");
+for($i = 0; $i < 3; $i = $i + 1){
+  echo $names[$1]; //Used the iterator as index
+}</code></pre>
+        </section>
+      </section>
+      <section>
+        <h4><strong>Nästa vecka</strong></h4>
+        <p>Mer loopar</p>
+        <p>Och en del formulär</p>
+      </section>
+      
+
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '90%',
+      width: '70%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js',condition: function (){
+        return !document.body.classList;}},
+        { src: 'plugin/notes/notes.js', async: true },
+        {src : 'lib/prismjs/prism.js'},
+        {src : 'js/print.js'}
+        ]
+      });
+    </script>
+  </body>
+  </html>

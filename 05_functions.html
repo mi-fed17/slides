@@ -1,0 +1,225 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="Functions">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title>Functions</title>
+  <script type="text/javascript">
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <style type="text/css">
+  .token.operator{ background:none; }
+  .reveal em, .reveal strong{
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <section>
+          <h1><strong>Functions</strong></h1>
+        </section>
+        <section>
+          <p>Om ingenting funkar</p>
+          <p><em>Kolla semikolon</em></p>
+          <p class="fragment fade-down">Kolla "skumma" mellanslag</p>
+          <pre class="fragment fade-down"><code class="language-php">echo "Hej" . $name . "!";</code></pre>
+          <p class="fragment fade-down">Kolla så att alla strängar är rätt</p>
+        </section>
+        <section>
+          <img src="https://i.imgur.com/cHV5wSi.png">
+        </section>
+      </section>
+      <section>
+        <section>
+          <p><strong>PHP standard code style</strong></p>
+          <p><a href="http://www.php-fig.org/psr/psr-1/">http://www.php-fig.org/psr/psr-1/</a></p>
+          <p><a href="http://www.php-fig.org/psr/psr-2/">http://www.php-fig.org/psr/psr-2/</a></p>
+          <p>Googla på <em>PSR-1</em> och <em>PSR-2</em></p>
+        </section>
+        <section>
+          <pre><code class="language-php">$numbers = array(5,6,2);
+$sum = 0;
+for($i = 0; $i < count($numbers); i++){
+  $sum += $i;
+}
+echo $sum;</code></pre>
+        <p class="fragment fade-down"><code>count()</code> är en inbyggd funktion</p>
+        </section>
+        <section>
+          <p><em>Flertal problem</em></p>
+          <p>Koden körs direkt hela tiden</p>
+          <p class="fragment fade-down">Koden körs en gång</p>
+          <p class="fragment fade-down">Vi har ingen kontroll</p>
+          <p class="fragment fade-down">Vi upprepar oss</p>
+          <p class="fragment fade-down">Vi kan inte <em>enkelt</em> kalla på samma kod flera gånger med olika värden</p>
+        </section>
+        <section>
+          <h3><strong>DRY</strong></h3>
+          <h3><strong>DON'T REPEAT YOURSELF</strong></h3>
+          <p class="fragment fade-down">Programmerare ska vara lata</p>
+        </section>
+        <section>
+          <p><em>Lathet</em></p>
+          <p class="fragment fade-down">Skapa en första lösning som FUNKAR</p>
+          <p class="fragment fade-down">Hitta grundproblemet och lös det</p>
+          <p class="fragment fade-down">Sen, om det behövs, <strong>gör bättre</strong></p>
+        </section>
+        <section>
+          <p><strong>Refaktorera</strong></p>
+          <blockquote>Omstrukturering av kod</blockquote>
+          <p class="fragment fade-down">Tanken är att förbättra, utan att ändra grundfunktionaliteten</p>
+          <p class="fragment fade-down">Få den mer lättläst</p>
+          <p class="fragment fade-down">Minska errorrisken</p>
+        </section>
+        <section>
+          <p><strong>Inkapsling</strong></p>
+          <p><em>Eng: encapsulation</em></p>
+          <p class="fragment fade-down">Att plocka ut kod som hör samman</p>
+          <p class="fragment fade-down">Ge den koden ett namn</p>
+          <p class="fragment fade-down">Allting handlar om struktur</p>
+          <p class="fragment fade-down">I ett dokument har vi <strong>headings</strong> som ger oss en överblick t.ex.</p>
+        </section>
+      </section>
+
+
+      <section>
+        <section>
+          <h3><em>Functions</em></h3>
+        </section>
+        <section>
+          <p>En funktion kapslar in och gör ett kodblock återanvändbart</p>
+          <p class="fragment fade-down">En funktion kan kallas på när vi vill</p>
+          <p class="fragment fade-down">En funktion kan kallas på flera gånger med olika värden</p>
+        </section>
+        <section>
+          <pre class="fragment fade-down"><code class="language-php">function say_hello(){
+  echo "Hello";
+}</code></pre>
+        <p class="fragment fade-down">En funktion start med nyckelordet <code><em>function</em></code></p>
+        <p class="fragment fade-down">Följt av namnet som du ger funktionen</p>
+        <p class="fragment fade-down">Följt av paranteser</p>
+        <p class="fragment fade-down">Följt av curly brackets där vår kod ska vara</p>
+        </section>
+        <section>
+            <p><em>En funktion körs inte förän du kallar på den</em></p>
+            <pre><code class="language-php">function say_hello(){
+  echo "Hello";
+}</code></pre>
+        <pre class="fragmen fade-down"><code class="language-php">say_hello(); //echo "Hello"</code></pre>
+        <p class="fragment fade-down">Där du kallar på funktionen skrivs koden ut</p>
+        <p class="fragment fade-down">Inte där du skrev koden</p>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h3><em>Argument & Parametrar </em></h3>
+        </section>
+        <section>
+          <p>Vi vill ofta kalla på samma kod fast med olika värden</p>
+          <p class="fragment fade-down">Perfekt tillfället för funktioner</p>
+          <p class="fragment fade-down">Vi kan även skicka med värden till en funktion</p>
+        </section>
+        <section>
+          <p>Inom funktionen: <em>parameter</em></p>
+          <pre class="fragment fade-down"><code class="language-php">function say_hello($name){
+  echo "Hello $name";
+}</code></pre>
+        <p class="fragment fade-down">När vi skickar med värdet: <em>argument</em></p>
+        <pre  class="fragment fade-down"><code class="language-php">say_hello("Jesper");</code></pre>
+        <p class="fragment fade-down"><code>"Jesper"</code> lagras i <code>$name</code></p>
+        </section>
+        <section>
+          <p>Värdena vi skickar med när vi kallar på funktionen <br/> (<em>argument</em>)</p>
+          <p>Lagras som variabler (<em>parametrar</em>) inuti funktionen</p>
+          <p class="fragment fade-down"><strong>Variabeln finns enbart inuti funktionen</strong></p>
+        </section>
+        <section>
+          <p>Vi kan i princip ha hur många argument som helst, håll koll på ordningen dock.</p>
+          <pre><code class="language-php">function say_hello($name1, $name2){
+  echo "Hello $name1 and $name2";
+}</code></pre>
+        <pre><code class="language-php">say_hello("Jesper", "Grobb");</code></pre>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h3><em><code>return</code></em></h3>
+        </section>
+        <section>
+          <p>Oftast vill vi spara värdet från en funktion istället för att skriva ut det</p>
+          <p class="fragment fade-down">Med <code><em>echo</em></code> skrivs det ut, men sparas inte i koden</p>
+          <p class="fragment fade-down">Med <code><em>return</em></code> säger vi att vi ska fortsätta använda värdet som skapas</p>
+        </section>
+        <section>
+          <pre><code class="language-php">function say_hello($name){
+  return "Hello $name";
+}</code></pre>
+        <p class="fragment fade-down">Vi måste spara värdet som returneras, annars försvinner det</p>
+        <pre class="fragment fade-down"><code class="language-php">say_hello("Jesper"); //Does "nothing"</code></pre>
+        <pre class="fragment fade-down"><code class="language-php">echo say_hello("Jesper");</code></pre>
+        <pre class="fragment fade-down"><code class="language-php">$hello = say_hello("Jesper");
+echo $hello;</code></pre>
+        </section>
+        <section>
+          <p>Mer värt exempel</p>
+           <pre><code class="language-php">function add_two_numbers($a, $b){
+  $sum = $a + $b;
+  return $sum;
+}</code></pre>
+        <pre class="fragment fade-down"><code class="language-php">$sum = add_two_numbers(5,6);
+echo $sum * 5; //we can continue using the value</code></pre>
+        <pre class="fragment fade-down"><code class="language-php">$new_sum = add_two_numbers($sum, $sum);
+echo $new_sum;</code></pre>
+        </section>
+      </section>
+
+      <section>
+        <h3><em>Övningar på zenit</em></h3>
+        <p><strong>Samt den första individuella</strong></p>
+      </section>
+      
+
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '90%',
+      width: '70%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js',condition: function (){
+        return !document.body.classList;}},
+        { src: 'plugin/notes/notes.js', async: true },
+        {src : 'lib/prismjs/prism.js'},
+        {src : 'js/print.js'}
+        ]
+      });
+    </script>
+  </body>
+  </html>
