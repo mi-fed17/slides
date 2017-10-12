@@ -1,0 +1,246 @@
+<html>
+<head>
+  <!-- <base href="https://jesperorb.github.io/revealjs/"> -->
+  <base href="file:///Users/jesperorb/projects/revealjs/">
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="Scope & Includes">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title>Scope & Includes </title>
+  <script type="text/javascript">
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <style type="text/css">
+  .token.operator{ background:none; }
+  .reveal em, .reveal strong{
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <section>
+          <h1><em>Scope</em></h1>
+          <p> + <code>include </code> & <code>require</code></p>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h3><em>Hur man söker efter information</em></h3>
+        </section>
+        <section>
+          <h4><strong>Ställa en fråga till en människa</strong></h4>
+          <p>om kod</p>
+        </section>
+        <section>
+          <ul>
+            <li class="fragment fade-down">Det här vill jag göra</li>
+            <li class="fragment fade-down">Det här har jag gjort</li>
+            <li class="fragment fade-down">Det här var det som faktiskt hände</li>
+          </ul>
+          <p><strong>Förväntat resultat & Faktiskt resultat </strong></p>
+        </section>
+        <section>
+          <p><em>Utgå alltid ifrån att personen inte har en aning om vad du gör</em></p>
+          <p>Även om programmering är alltid densamma så förändras <strong>kontexten</strong></p>
+        </section>
+        <section>
+          <h4><strong>Ställa en fråga till en maskin</strong></h4>
+        </section>
+        <section>
+          <p>Maskinerna är mycket bättre på att gissa vad du gjort, vad du vill göra och vad som har hänt</p>
+          <p class="fragment fade-down">Maskinerna är starkare, smartare, bättre</p>
+          <p class="fragment fade-down"><strong>Tillbe våra nya ledare, maskinerna</strong></p>
+        </section>
+        <section>
+          <p>Hur man söker information</p>
+          <p><em>Google</em></p>
+          <p><em>Stack Overflow</em></p>
+        </section>
+        <section>
+          <p><strong>Hitta information som är generisk</strong>: samma för alla</p>
+          <p class="fragment fade-down">Ta bort information som gäller bara dig</p>
+          <p class="fragment fade-down">Begränsa tidsspannet</p>
+          <p class="fragment fade-down">Läs svaret, kopiera inte bara koden</p>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <strong>Scope</strong>
+        </section>
+        <section>
+          <p>För det mesta är vi i:</p>
+          <p><em>Global Scope</em></p>
+          <p class="fragment fade-down">Detta menas <em>globalt</em> för hela filen. INTE alla filer på hela hemsidan</p>
+          <p class="fragment fade-down">PHP är <strong>stateless</strong>: vet inte vad som hände på förra sidan</p>
+        </section>
+        <section>
+          <p>Hela filen utvärderas innan vi vi ser sidan.</p>
+          <pre><code class="language-php">&lt;? $name = &quot;Jesper&quot;; ?&gt;
+&lt;div&gt;
+  &lt;?= $name ?&gt;
+&lt;/div&gt;</code></pre>
+        <p class="fragment fade-down">Olika <code><em>php</em></code>-taggar, samma <strong>scope</strong></p>
+        </section>
+        <section>
+          <pre><code class="language-php">$a = &quot;Hello!&quot;;
+
+function say_hello(){
+    echo $a;
+}
+
+say_hello();</code></pre>
+          <p class="fragment fade-down">Vad kommer att skrivas ut?</p>
+        </section>
+        <section>
+          <p>När vi skapar en function får vi även <code><em>Function scope</em></code></p>
+          <p class="fragment fade-down">Funktionen kan inte komma åt variabler utanför</p>
+          <p class="fragment fade-down">Utanför funktionen kan vi inte komma åt variabler inuti funktionen</p>
+        </section>
+        <section>
+          <p>Vi måste i så fall säga att vi ska använda den globala variabeln</p>
+          <pre><code class="language-php">$a = &quot;Hello!&quot;;
+function say_hello()
+{
+    /* &quot;Use the global defined $a&quot; */
+    global $a;
+    echo $a;
+} 
+say_hello();</code></pre>
+        </section>
+        <section>
+          <p>Eller använda superglobala variabeln: <code><em>$GLOBALS</em></code></p>
+          <pre><code class="language-php">$a = &quot;Hello!&quot;;
+   
+function say_hello()
+{
+  /* &quot;Use the global defined $a&quot; */
+  echo $GLOBALS[&#039;a&#039;];
+} 
+say_hello();</code></pre>
+        </section>
+        <section>
+          <p>Detta är en <em>Bra Grej</em></p>
+          <p class="fragment fade-down">Bara den kod som MÅSTE ha tillgång till variabel ska ha det. </p>
+          <p class="fragment fade-down">Det är också därför vi ska använda <code><em>return</em></code></p>
+        </section>
+        <section>
+          <p><em>Global scope</em></p>
+          <pre><code class="language-php">&lt;?php
+$products = array(&quot;A thing&quot;, &quot;anotha&quot;, &quot;one more!&quot;);
+foreach($products as $product){ ?&gt; 
+  
+  &lt;p&gt; &lt;?= $product ?&gt; &lt;/p&gt;
+
+&lt;?php } ?&gt;</code></pre>
+        <p class="fragment fade-down">Stänger taggen på tredje raden, men loopen stängs inte förän sista raden. Loopen fortsätter</p>
+        </section>
+        <section>
+          <p>Vanligt mönster: vi har en alternativ syntax</p>
+          <pre><code class="language-php">&lt;?php
+$products = array(&quot;A thing&quot;, &quot;anotha&quot;, &quot;one more!&quot;);
+foreach($products as $product): 
+?&gt; 
+  
+  &lt;p&gt; &lt;?= $product ?&gt; &lt;/p&gt;
+
+&lt;?php endforeach; ?&gt;</code></pre>
+        </section>
+        <section>
+          <pre><code class="language-php">&lt;?php
+$age = 18;
+if($age > 18):
+?&gt; 
+  
+  &lt;p&gt; Välkommen! &lt;/p&gt;
+
+&lt;?php endif; ?&gt;</code></pre>
+        </section>
+        <section>
+          <p>Båda sätten fungerar nästan likadant</p>
+          <p class="fragment fade-down"><code><em>endif;</em></code> och <code><em>endforeach;</em></code> brukar ge lite snyggare och tydligare kod</p>
+          <a class="fragment fade-down" href="http://php.net/manual/en/control-structures.alternative-syntax.php">http://php.net/manual/en/control-structures.alternative-syntax.php</a>
+        </section>
+        <section>
+          <p>Whoops 🤡</p>
+          <p class="fragment fade-down">Det ska egentligen vara <code><em>elseif</em></code></p>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h2><strong><code>include</code></strong>/<strong><code>require</code></strong></h2>
+        </section>
+        <section>
+          <p>Med <code>include</code> & <code>require</code> så kopierar vi kod till flera ställen</p>
+          <p class="fragment fade-down">Vi länkar <em>INTE</em> samma kod till olika ställen</p>
+        </section>
+        <section>
+          <pre><code class="language-php">//code.php
+&lt;?php
+ $name = &quot;Jesper&quot;;</code></pre>
+          <pre><code class="language-php">//index.php
+&lt;?php
+  include &#039;code.php&#039;;
+  echo $name;</code></pre>
+        </section>
+        <section>
+            <p><code><em>include</em></code> ger oss en <em>varning</em> om det är fel på filen vi inkluderar</p>
+            <p><code><em>require</em></code> ger oss ett <em>error</em> om det är fel på filen vi inkluderar</p>
+        </section>
+        <section>
+          <pre><code class="language-php">//index.php
+&lt;?php
+  include &#039;code.php&#039;;
+  echo $name;</code></pre>
+  <pre><code class="language-php">//index.php
+&lt;?php
+  require &#039;code.php&#039;;
+  echo $name;</code></pre>
+        </section>
+        <section>
+          <p>Funkar på både html och php</p>
+          <h4><strong>Kodexempel</strong></h4>
+        </section>
+      </section>
+    
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '90%',
+      width: '70%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js',condition: function (){
+        return !document.body.classList;}},
+        { src: 'plugin/notes/notes.js', async: true },
+        {src : 'lib/prismjs/prism.js'},
+        {src : 'js/print.js'}
+        ]
+      });
+    </script>
+  </body>
+  </html>
