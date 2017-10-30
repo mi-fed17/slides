@@ -1,0 +1,167 @@
+<html lang="en">
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="PDO">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> PDO </title>
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+      <!-- INTRO SLIDE -->
+      <section>
+        <section>
+          <h1><strong>PDO</strong></h1>
+          <p><em>PHP Data Object</em></p>
+        </section>
+        <section data-background-image="http://i.imgur.com/LsItP.gif">
+          
+        </section>
+        <section data-background-image="http://i.imgur.com/0GEgv.gif">
+          
+        </section>
+        <section data-background-image="https://www.ypulse.com/uploads/default/WhiteGuyBlinkingMAIN.gif">
+          
+        </section>
+        <section data-background-image="https://media.tenor.co/images/fb3f2d1e814190100a4ae401b1660d5b/tenor.gif"></section>
+        <section data-background-image="http://www.reactiongifs.com/r/2013/10/tim-and-eric-mind-blown.gif"></section>
+      </section>
+      
+      <!-- CONTENT -->
+
+      <section>
+        <section>
+          <h1><strong>PDO + SQL</strong></h1>
+        </section>
+        <section>
+          <p><em>PDO</em> är numera det rätta sättet att <br/>säkert koppla till databaser via PHP</p>
+          <pre><code class="language-sql">mysql_connect(); //the old ways</code></pre>
+          <pre><code class="language-sql">mysqli_connect(); //the old ways</code></pre>
+          <p class="fragment fade-down">Mer osäkra kopplingar, <em>PDO</em> gör mycket arbete åt oss</p>
+        </section>
+        <section>
+          <img src="http://i.imgur.com/yRG9VCw.png" alt="Decrap">
+        </section>
+        <section>
+          <p><em>PDO</em> behöver: Database source, username, password, (options)</p>
+          <p class="fragment fade-down">Options är optional, vi kan skippa det men kan behövas senare.</p>
+          <a class="fragment fade-down" href="http://localhost:8888/MAMP">http://localhost:8888/MAMP/</a>
+        </section>
+        <section>
+          <p>Vi instansierar ett nytt <strong>PDO-object</strong></p>
+          <pre><code class="language-sql">$pdo = new PDO(
+  "mysql:host=localhost;dbname=selected_database;charset=utf8",
+  "root",
+  "root"
+);</code></pre>
+        <p class="fragment fade-down">Spara instansen!</p>
+        </section>
+        <section>
+          <p><em>Vanliga fel</em></p>
+          <p>Rätt adress= (localhost  eller 127.0.0.1)</p>
+          <p>Testa ange portnummer</p>
+          <p>Rätt lösen och användarnamn?</p>
+          <p>Har du angett charset? (charset ska vara  <em><code>'utf8'</code></em>)</p>
+        </section>
+        <section>
+          <p>Lägg till i början av filen</p>
+          <pre><code class="language-php">ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);</code></pre>
+        </section>
+        <section>
+          <p><em>Prepare</em></p>
+          <p>Med <em><code>prepare</code></em> skriver vi våra <strong>SQL</strong>-statements</p>
+          <pre><code class="language-php">$statement = $pdo->prepare("SELECT * FROM pc");</code></pre>
+        </section>
+        <section>
+          <p>När vi har förberett ett statement måste vi utföra det</p>
+          <pre><code class="language-php">$statement->execute();</code></pre>
+          <p class="fragment fade-down"><code><em>$statement</em></code> kommer nu att innehålla de hämtade raderna och vi kan loopa igenom dem.</p>
+        </section>
+        <section>
+          <p><em>that's so fetch!</em></p>
+          <pre><code class="language-php">$statement = $pdo->prepare("SELECT * FROM celebrities");
+$statement->execute();
+$data = $statement->fetchAll(PDO::FETCH_ASSOC);</code></pre>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h1>
+            <strong>Superglobals</strong>
+          </h1>
+        </section>
+        <section>
+          <p>I PHP har vi såkallade <em>Superglobals</em></p>
+          <p>Dessa används främst för att hämta information vid <strong>GET</strong> och <strong>POST</strong></p>
+          <p class="fragment fade-down">Varje request innehåller som vi tidigare vet mer data än enbart URLen</p>
+          <p></p>
+        </section>
+        <section>
+          <p><code><em>var_dump</em></code> dessa i er index.php när ni behöver se vad som skickas</p>
+          <pre><code class="language-php">$_POST
+$_GET
+$_SERVER</code></pre>
+        </section>
+        <section>
+          <p>Med <code><em>$_POST</em></code> och <code><em>$_GET</em></code> kan vi hämta data som skickas vid varje request</p>
+          <p class="fragment fade-down">Kom ihåg <strong>CRUD</strong></p>
+        </section>
+        <section>
+            <p><strong>$_GET</strong> för att få URL-query</p>
+            <pre><code class="language-html">https://mysite.com?name=jesper&ok=whatev</code></pre>
+            <pre><code class="language-php">var_dump($_GET) // { name: jesper, ok: whatev }</code></pre>
+        </section>
+        <section>
+          <p>Skillnaden mellan <code><em>$_GET</em></code> och <code><em>$_POST</em></code></p>
+          <p>I <code><em>$_POST</em></code> skickas allt gömt</p>
+          <p>I <code><em>$_GET</em></code> skickas allt i URLen</p>
+          <p class="fragment fade-down">Båda metoderna kan skicka samma information</p>
+        </section>
+      </section>
+
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '90%',
+      width: '70%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js',condition: function (){
+        return !document.body.classList;}},
+        { src: 'plugin/notes/notes.js', async: true },
+        {src : 'lib/prismjs/prism.js'},
+        {src : 'js/print.js'}
+        ]
+      });
+    </script>
+</body>
+</html>

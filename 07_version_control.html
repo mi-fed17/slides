@@ -1,0 +1,176 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="Version Control">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> Version Control </title>
+  <script type="text/javascript">
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <style type="text/css">
+  .token.operator{ background:none; }
+  .reveal em, .reveal strong{
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      
+      <section>
+        <section>
+          <h3><em>Version Control</em></h3>
+          <p>& Terminalen</p>
+        </section>
+      </section>
+      
+      <section>
+        <section>
+          <h3><strong>Terminalen</strong></h3>
+          <p>Kommandotolken</p>
+        </section>
+        <section>
+          <p>Oftast arbetar vi med ett <em>GUI</em></p>
+          <p class="fragment fade-down">Graphical User Interface</p>
+          <p class="fragment fade-down">Bakom detta är oftast ett <em>CLI</em></p>
+          <p class="fragment fade-down">Command Line Interface</p>
+          <p class="fragment fade-down">För varje del i det grafiska finns en kodrad som körs</p>
+        </section>
+        <section>
+          <p>Istället för att navigera och arbeta grafiskt (peka och klicka)</p>
+          <p>Skriv kommandon, i princip koda vad du vill göra</p>
+        </section>
+        <section>
+          <img src="https://media.giphy.com/media/1M9fmo1WAFVK0/giphy.gif">
+        </section>
+        <section>
+          <p>När man väl har lärt sig så är det 100000000x effektivare</p>
+          <p class="fragment fade-down">Mer kontroll</p>
+          <p class="fragment fade-down">Mer tillgång till operativsystemet</p>
+          <p class="fragment fade-down"><em>Ultimata makten</em></p>
+        </section>
+      </section>
+
+
+      <section>
+        <section>
+          <p>All utvecklare använder någon form av <em>Versionshantering</em></p>
+          <p class="fragment fade-down">Vanligast är <strong>verktyget</strong>git</p>
+        </section>
+        <section>
+          <ul>
+            <li>index.php</li>
+            <li>index_old.php</li>
+            <li class="fragment fade-down">index_new_old.php</li>
+            <li class="fragment fade-down">index_new2.php</li>
+            <li class="fragment fade-down">index_new2_final.php</li>
+            <li class="fragment fade-down">index_new2_final2.php</li>
+          </ul>
+          <p class="fragment fade-down">😤</p>
+        </section>
+        <section>
+          <p>Istället för att skapa nya filer</p>
+          <p>Skapa "sparningar" av hur era filer ser ut vid ett visst tillfälle</p>
+          <p class="fragment fade-down">I git kallas en "sparning" för en <em>commit</em></p>
+        </section>
+        <section>
+          <ul>
+            <li><em>Working Directory</em><ul><li>Mappen som du jobbar i lokalt (ditt projekt)</li></ul></li>
+           <li><em>Staging Area</em>
+            <ul>
+              <li>Filer som ska läggas till i ditt repository</li>
+            </ul>
+          </li>
+           <li><em>Repository</em><ul><li>Alla sparade ändringar (commits) av ditt projekt</li></ul></li></ul>
+         </ul>
+        </section>
+        <section>
+          <p>För att hålla reda på sina sparningar skapar man <em>branches</em></p>
+          <p class="fragment fade-down">Avgreningar av ens kod där man ska göra ändringar</p>
+          <p class="fragment fade-down">Om du inte har skapat en kod så står du i branchen<strong>master</strong></p>
+        </section>
+        <section>
+          <img src="https://i.imgur.com/46HyBBD.png">
+        </section>
+        <section>
+          <p>Typiskt arbetsflöde</p>
+          <ul>
+            <li>Gör din mapp till ett repository: <code><em>git init / git clone</em></code></li>
+            <li class="fragment fade-down">Lägg till alla filer till git <code><em>git add .</em></code></li>
+            <li class="fragment fade-down">Skapa en branch: <code><em>git checkout -b my-new-branch</em></code></li>
+            <li class="fragment fade-down">Skapa en sparning: <code><em>git commit -m "My first save"</em></code></li>
+          </ul>
+        </section>
+        <section>
+          <p>För att byta mellan branches</p>
+          <pre><code class="language-bash">git checkout name-of-branch</code></pre>
+          <p>För att byta mellan commits</p>
+          <pre><code class="language-bash">git checkout name-of-commit</code></pre>
+          <p class="fragment fade-down">Du måste <strong>Alltid</strong> göra en <em>commit</em> för att något ska sparas i git</p>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h3><strong>GitHub</strong></h3>
+        </section>
+        <section>
+          <img src="https://i.imgur.com/tGnGLTK.png" alt="repository">
+        </section>
+        <section>
+          <p>Git är inte bunden till GitHub på något sätt</p>
+          <p>Det finns flera tjänster som gör samma sak:</p>
+          <p class="fragment fade-down">GitLab, BitBucket, Microsoft Team Services</p>
+          <p class="fragment fade-down">Sidor dedikerade till att hantera <code><em>Källkod</em></code></p>
+        </section>
+        <section>
+          <p>Vi använder versionskontroll <em>lokalt</em></p>
+          <p class="fragment fade-down">Sen <em>pushar</em> vi upp koden så att andra kan ladda ner den: <em>pull</em></p>
+        </section>
+        <section>
+          <a href="https://www.codecademy.com/learn/learn-git">https://www.codecademy.com/learn/learn-git</a>
+          <a href="https://try.github.io/">https://try.github.io/</a>
+          <a href="https://learngitbranching.js.org/">https://learngitbranching.js.org/</a>
+        </section>
+      </section>
+    
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '90%',
+      width: '70%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js',condition: function (){
+        return !document.body.classList;}},
+        { src: 'plugin/notes/notes.js', async: true },
+        {src : 'lib/prismjs/prism.js'},
+        {src : 'js/print.js'}
+        ]
+      });
+    </script>
+  </body>
+  </html>
