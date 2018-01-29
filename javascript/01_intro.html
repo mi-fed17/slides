@@ -1,0 +1,178 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="JavaScript Intro">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> JavaScript Intro</title>
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <section>
+          <h1><strong>JavaScript</strong></h1>
+        </section>
+        <section>
+          <blockquote>
+            JavaScript är ett dynamiskt typat och eventdrivet programmeringsspråk främst körs via en webbläsare.
+          </blockquote>
+          <blockquote class="fragment fade-down">high-level, dynamic, weakly typed, prototype-based, multi-paradigm, and interpreted programming language.</blockquote>
+        </section>
+        <section data-background-image="https://i.imgur.com/cSWdODs.png">
+          
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <p><a href="https://github.com/mi-fed17/javascript">https://github.com/mi-fed17/javascript</a></p>
+          <p><em>Finns även länkad på zenit</em></p>
+        </section>
+        <section>
+          <p><em>Innehåll</em></p>
+          <ul>
+            <li class="fragment fade-down">JavaScript &amp; DOM-hantering ~ Events, DOM , jQuery</li>
+            <li class="fragment fade-down">Felsökning ~ `console`, breakpoints &amp; debugger; </li>
+            <li class="fragment fade-down">Async &amp; AJAX ~API, jQuery.ajax(), fetch, promises, callback</li>
+            <li class="fragment fade-down">Designmönster &amp; OOP ~ Moduler, ES6 `class`, Constructor </li>
+            <li class="fragment fade-down">node &amp; npm ~ npm, webpack &amp; gulp</li>
+            <li class="fragment fade-down">Bibliotek &amp; Ramverk ~ Reacts ekosystem etc. </li>
+          </ul>
+        </section>
+        <section>
+          <p><em>Examination</em></p>
+          <p>Till varje del är det kopplat en inlämningsuppgift</p>
+          <p>Till vissa delar är det även kopplat en dugga (examinerande quiz)</p>
+        </section>
+        <section>
+          <p><em>Litteratur</em></p>
+          <ul>
+            <li><a href="https://github.com/getify/You-Dont-Know-JS">You Don't Know JavaScript</a></li>
+            <li><a href="https://www.w3schools.com/js/">JavaScript ~ W3Schools.com</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction">Introduction To the DOM ~ MDN</a></li>
+            <li><a href="https://addyosmani.com/resources/essentialjsdesignpatterns/book/">JavaScript Design Patterns</a></li>
+          </ul>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <p>För att komma igång med JavaScript behöver vi 3 saker:</p>
+          <p>En <code><em>index.html</em></code></p>
+          <p>En <code><em>main.js</em></code> - en javascript-fil</p>
+          <p>Samt en browser att köra koden i, öppna <code><em>index.html</em></code>i</p>
+        </section>
+        <section>
+          <pre><code class="language-html">&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;JavaScript linking&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+            
+  &lt;script src=&quot;main.js&quot;&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        <p>Länka in ditt script sist</p>
+        </section>
+        <section>
+          <p>JavaScript har inte samma scope som PHP</p>
+          <p>Allting körs i samma scope: <code><em>window</em></code></p>
+          <p class="fragment fade-down">Även om du skapar två olika filer är de i princip samma fil</p>
+          <p class="fragment fade-down">Ordingen som man inkluderar scripten spelar roll</p>
+        </section>
+        <section>
+          <p><em>Syntax</em></p>
+          <p><a href="https://www.lullabot.com/articles/learning-javascript-from-php-a-comparison">https://www.lullabot.com/articles/learning-javascript-from-php-a-comparison</a></p>
+        </section>
+        <section>
+          <p>Visa värden: <code><em>console.log()</em></code></p>
+          <pre><code class="language-js">var answer = 5;
+console.log(answer)</code></pre>
+          <p>Istället för <code><em>var_dump</em></code></p>
+        </section>
+        <section>
+          <p>Variabler</p>
+          <pre><code class="language-js">var a = 5;
+const b = "Hej";
+let c = true;</code></pre>
+          <p>Variabler skapas med <code><em>var/const/let</em></code></p>
+          <p><code><em>const</em></code> är en konstant som inte får skrivas om</p>
+          <p>let är som var förutom att den skapar nytt scope i if-block (återkommer till den)</p>
+        </section>
+        <section>
+          <p>Arrayer</p>
+          <pre><code class="language-js">var arr = [5,10,20];
+var arr2 = ["Hej", "pa", "dig"];</code></pre>
+        </section>
+        <section>
+          <p>I JavaScript är associativa arrayer <code><em>objekt</em></code></p>
+          <pre><code class="language-js">var obj = {
+  property: "Value",
+  age: 25
+}</code></pre>
+          <pre class="fragment fade-down"><code class="language-js">$obj = array(
+  'name'  => 'Jesper',
+  'age'   => 1000
+);</code></pre>
+        </section>
+        <section>
+          <p>För att enkelt läsa in data: prompt</p>
+          <pre><code class="language-js">var answer = prompt('Vad heter du?');
+          console.log(answer)</code></pre>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <p>Fram till fredag:</p>
+          <p><em>Läs YDKJ: Up & Going</em></p>
+          <p>Gör så många övningar du kan och orkar</p>
+          <p>Kör igenom CodeAcademys JavaScript-kurs</p>
+          <p><strong>På fredag går vi igenom DOM-manpulation</strong></p>
+        </section>
+      </section>
+
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '90%',
+      width: '70%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js',condition: function (){
+        return !document.body.classList;}},
+        { src: 'plugin/notes/notes.js', async: true },
+        {src : 'lib/prismjs/prism.js'},
+        {src : 'js/print.js'}
+        ]
+      });
+    </script>
+  </body>
+  </html>
