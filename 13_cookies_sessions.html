@@ -1,0 +1,133 @@
+<html lang="en">
+<head>
+  <!-- <base href="https://jesperorb.github.io/revealjs/"> -->
+  <base href="file:///Users/jesperorb/projects/revealjs/">
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png" />
+  <meta name="description" content="Cookies & Sessions">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> Cookies & Sessions </title>
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <style>
+    .reveal .slides section .fragment .highlight-red.visible{
+      color: white;
+      background-color: #2d2d2d;
+      padding-right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+      <!-- SLIDES START HERE -->
+      <section>
+        <section>
+          <h1>
+            <strong>
+              Cookies & Sessions
+            </strong>
+          </h1>
+        </section>
+        <section>
+          <p><strong>Sessions</strong></p>
+          <p class="fragment fade-down">I princip en textfil som sparas för varje session på datorn/servern</p>
+          <p class="fragment fade-down">Varje session är oftast inställd på att förstöras när webbläsarn stängs ner</p>
+          <pre class="fragment fade-down"><code class="language-file">/Applications/MAMP/tmp/php</code></pre>
+          <p class="fragment fade-down">Varför?</p>
+        </section>
+        <section>
+          <p><strong>Scenario</strong></p>
+          <p class="fragment fade-down">2 miljoner inloggade användare</p>
+          <p class="fragment fade-down">Inloggad på 3 olika devices: mobil, hem, jobb</p>
+          <p class="fragment fade-down"><em>6 miljoner sessions</em></p>
+          <p class="fragment fade-down">Lagrade på <strong>vår server</strong>, saktar ner och tar plats</p>
+        </section>
+        <section>
+          <p><strong>Fördelar</strong></p>
+          <p class="fragment fade-down">Ökad säkerhet av att lagra i backend</p>
+          <p class="fragment fade-down">Sparar vi det i webbläsaren är det lättare att stjäla/hacka</p>
+          <p class="fragment fade-down">Lätt att koda då vi alltid känner till vad som ligger i <code><em>$_SESSION</em></code></p>
+        </section>
+        <section>
+          <p><em>Förläng tiden på en session</em></p>
+          <pre><code class="language-php">session_set_cookie_params(3600);</code></pre>
+          <p class="fragment fade-down">Ska sätta längden på en session till en timme oavsett vad användaren gör</p>
+        </section>
+        <section>
+          <pre><code class="language-php">ini_set('session.cookie_lifetime', 3600);
+ini_set('session.gc_maxlifetime', 3600);</code></pre> 
+          <p class="fragment fade-down">Alternativt sätta längden i <code><em>php.ini</em></code></p>
+        </section>
+        <section>
+          <h2><strong>
+            <code>Cookies</code>
+          </strong></h2>
+        </section>
+        <section>
+          <p><strong>Alternativet</strong></p>
+          <p class="fragment fade-down">Cookies lagras i användarens webbläsare</p>
+          <p class="fragment fade-down">Skickas med i varje förfrågan till servern så att servern vet vem som gör förfrågan</p>
+          <p class="fragment fade-down">Vi kan spara vilken information vi vill i <code><em>cookies</em></code></p>
+          <pre class="fragment fade-down"><code class="language-php">$_COOKIE</code></pre>
+        </section>
+        <section>
+          <pre><code class="language-php">$_SESSION["username"];
+$_COOKIE["username"];
+$_POST["username"];
+$_GET["username"];</code></pre>
+          <p class="fragment fade-down">Varje superglobal är en <code><em>associative array</em>: namn => värde</code></p>
+        </section>
+        <section>
+          <p><strong>Sätta cookies</strong></p>
+          <blockquote>setcookie() defines a cookie to be sent along with the rest of the HTTP headers.</blockquote>
+          <pre><code class="language-php">setcookie("name", "value", $time, "path", "domain", $httponly);</code></pre> 
+          <pre><code class="language-php">setcookie("username", "zero_cool", time() + 3600, "/");</code></pre> 
+          <p class="fragment fade-down">Sätter en cookie med användarnamn som håller i 1h</p>
+          <p class="fragment fade-down">De två sista argumenten kan skippas i vårt fall</p>
+        </section>
+      </section>
+
+
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '90%',
+      width: '70%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      {
+        src: 'lib/js/classList.js', condition: function () {
+          return !document.body.classList;
+        }
+      },
+      { src: 'plugin/notes/notes.js', async: true },
+      { src: 'lib/prismjs/prism.js' },
+      { src: 'js/print.js' }
+      ]
+    });
+  </script>
+</body>
+</html>

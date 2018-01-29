@@ -1,0 +1,206 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="Wordpress 3">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> Wordpress 3</title>
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <section>
+          <h1><strong>Wordpress</strong></h1>
+        </section>
+        <section>
+          <h4>WordPress Codex - Bibeln</h4>
+          <h4><a href="https://codex.wordpress.org/">https://codex.wordpress.org/</a></h4>
+        </section>
+      </section>
+      <section>
+        <section>
+          <p>Vi har två sätt att modifiera innehåll via hooks</p>
+          <ul>
+            <li><em>actions</em> - kör handlingar vid vissa tillfällen</li>
+            <li><em>filters</em> - filtrerar innehåll vid vissa tillfällen</li>
+          </ul>
+          <pre><code class="language-php">
+add_action('init', 'my_custom_function');
+add_filter('the_title', 'my_title_function');</code></pre>
+          <a class="reference"href="https://codex.wordpress.org/Plugin_API/Action_Reference">https://codex.wordpress.org/Plugin_API/Action_Reference</a></a>
+        </section>
+        <section>
+          <pre><code class="language-php">function profanity_filter($text) {
+  $words = array("illuminati", "big brother", "deep state");
+  /* str_replace checks for words in the array and removes them from
+   * the content in the post, returning a bleeped version */
+  return str_replace($words, "BLEEP", $text);
+}
+
+add_filter('the_content', 'profanity_filter');</code></pre></section>
+      <section>
+        <p>Template</p>
+        <pre><code class="language-php">&lt;?php
+/**
+ * Template Name: This Name Matters
+ */</code></pre>
+        <p class="fragment fade-down">Spelar mindre roll vad filen heter, ha rätt Template Name</p>
+      </section>
+      <section>
+        <p>Vi ska aldrig gå direkt till en Template, sätt den alltid via Post.</p>
+        <img src="https://i.imgur.com/YnXmsEI.png">
+      </section>
+      <section>
+        <img src="https://i.imgur.com/JP8twKY.png">
+        <p>Den titel du ger blir <code><em>the_title()</em></code></p>
+        <p>Länken får du via <code><em>the_permalink()</em></code></p>
+      </section>
+      <section>
+        <img src="https://i.imgur.com/oGngIOj.png">
+        <p>Den bild som välj här blir <code><em>the_post_thumbnail()</em></code></p>
+      </section>
+      <section>
+        <img src="https://i.imgur.com/rPZMiW6.png">
+        <p>Det innehåll som du lägger här blir <code><em>the_content()</em></code></p>
+      </section>
+      <section>
+        <p>Vill du lägga på en viss klass på bilden</p>
+        <pre><code class="language-php">the_post_thumbnail(
+  array(
+    "class" => "custom-image-class"
+  )
+)</code></pre>
+        <p>Många funktioner tar en array av argument</p>
+      </section>
+      <section>
+        <p>Visa bara bilder, t.ex. portfolio</p>
+        <p>Sätt en kategori och en "Featured Image"</p>
+        <pre><code class="language-php">$query = new WP_Query(array("category_name" => "portfolio"));
+
+while($query->have_posts()): $query->the_post();
+  the_post_thumbnail();
+endwhile;</code></pre>
+        <p>Gör det till en <em>template</em></p>
+      </section>
+    </section>
+    <section>
+      <section>
+        <h1><em>Plugins</em></h1>
+      </section>
+      <section>
+        <p>Plugins lägger till extra funktionalitet</p>
+        <p class="fragment fade-down">Plugins är i sin grund en php-fil som du aktiverar eller avaktiverar</p>
+        <p class="fragment fade-down">All kod som du skrivit i functions.php kan du lägga i en plugin</p>
+      </section>
+      <section>
+        <pre><code class="language-php">&lt;?php
+/**
+ * Plugin Name: Custom Plugin Name
+ */</code></pre>
+        <p>Allt som krävs är en kommentar i börja av filen för att definera den som plugin</p>
+        <p>Samt att lägga den i <code><em>wp-content/plugins</em></code></p>
+      </section>
+      <section>
+        <pre><code class="language-php">/** 
+ * Plugin Name: Profanity filter
+ */
+function profanity_filter($text) {
+  $words = array("illuminati", "big brother", "deep state");
+  /* str_replace checks for words in the array and removes them from
+   * the content in the post, returning a bleeped version */
+  return str_replace($words, "BLEEP", $text);
+}
+add_filter('the_content', 'profanity_filter');</code></pre>
+      </section>
+      <section>
+        <p>Custom Post Type</p>
+        <img src="https://i.imgur.com/f7bNxa1.png">
+      </section>
+      <section>
+        <p>Default Post Types</p>
+        <ul>
+          <li>Post (Post Type: 'post')</li>
+          <li>Page (Post Type: 'page')</li>
+          <li>Attachment (Post Type: 'attachment')</li>
+          <li>Revision (Post Type: 'revision')</li>
+          <li>Navigation Menu (Post Type: 'nav_menu_item')</li>
+          <li>Custom CSS (Post Type: 'custom_css')</li>
+          <li>Changesets (Post Type: 'customize_changeset')</li>
+        </ul>
+      </section>
+      <section>
+        <pre><code class="language-php">function create_post_type() {
+  register_post_type( 'Cats',
+    array(
+      'labels' => array(
+        'name' =>  'Cats',
+        'singular_name' => 'Cat'
+      ),
+      'public' => true,
+      'has_archive' => true,
+    )
+  );
+}
+add_action( 'init', 'create_post_type' );</code></pre>
+      </section>
+      <section>
+        <pre><code class="language-php">$args = array( 'post_type' => 'cats' );
+$query = new WP_Query( $args );</code></pre>
+        <p>Filtrera baserat på vilken typ av Post vi har</p>
+      </section>
+      <section>
+        <p><a href="https://codex.wordpress.org/Post_Types">https://codex.wordpress.org/Post_Types</a></p>
+        <p><a href="https://www.smashingmagazine.com/2012/11/complete-guide-custom-post-types/">https://www.smashingmagazine.com/2012/11/complete-guide-custom-post-types/</a></p>
+      </section>
+      <section>
+        <ul>
+          <li><em>Plugins:</em> funktionalitet som ligger i plugins-mappen och har <code><strong>Plugin Name</strong></code></li>
+          <li><em>Custom Post Type</em>: skapar ett nytt typ av inlägg: <code><strong>post_type</strong></code></li>
+          <li><em>Template: </em> Custom variant av en Page</li>
+        </ul>
+      </section>
+    </section>
+
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '90%',
+      width: '70%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js',condition: function (){
+        return !document.body.classList;}},
+        { src: 'plugin/notes/notes.js', async: true },
+        {src : 'lib/prismjs/prism.js'},
+        {src : 'js/print.js'}
+        ]
+      });
+    </script>
+  </body>
+  </html>

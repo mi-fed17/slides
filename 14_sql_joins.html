@@ -1,0 +1,132 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="SQL JOINS">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> SQL JOINS </title>
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <style type="text/css">
+    .reveal section img{
+      background:none; box-shadow: none;
+    }
+    #intro-text{
+      font-family: monospace;
+      text-shadow: 1px 1px 0 #999, 
+                    2px 2px 0 #999, 
+                    3px 3px 0 #999,
+                    4px 4px 0 #999,
+                    5px 5px 0 #999,
+                    6px 6px 0 #999,
+                    7px 7px 0 #999,
+                    8px 8px 0 #999,
+                    9px 9px 0 #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section data-background="#0000ff">
+        <img style="background:none; box-shadow: none; position: absolute; top: 0; right: 0;" src="https://zippy.gfycat.com/ElderlyJovialFinwhale.gif" alt="A rotating globe."> 
+        <img style="background:none; box-shadow: none; position: absolute; top: 0; right: 150;" src="https://zippy.gfycat.com/ElderlyJovialFinwhale.gif" alt="A rotating globe."> 
+        <marquee scrollamount="20"><h1 id="intro-text">SQL JOINS</h1></marquee>
+      </section>
+
+      <section>
+        <section>
+          <p>Alla <em>JOINS</em> skapar en ny tabell som innehåller alla kolumner från både den första och den andra tabellen. Det som skiljer <em>JOINS</em> är vilka rader som tas med.</p>
+        </section>
+        <section data-background="white">
+          <img src="http://i.imgur.com/byc1Ucb.png" alt="JOIN/CROSS JOIN.">
+          <p class="fragment fade-down">Alla möjliga kombinationer</p>
+        </section>
+        <section>
+          <p class="fragment fade-down">Om vi vill se vilka studenter som går vilka kurser</p>
+          <pre><code class="language-sql">SELECT * FROM students
+JOIN courses</code></pre>
+          <p class="fragment fade-down">Kommer inte <em>matchas</em>, enbart lägga ihop vilka möjliga kombinationer det finns</p>
+          <p class="fragment fade-down">Vilka studenter som skulle kunna gå en viss kurs</p>
+        </section>
+        <section data-background="white">
+          <img src="http://i.imgur.com/f5hAT17.png" alt="INNER JOIN.">
+        </section>
+        <section>
+          <h5><code><em>ON</em></code></h5>
+          <pre><code class="language-sql">SELECT * FROM students
+JOIN courses
+ON students.course_id = courses.course_id</code></pre>
+        <p class="fragment fade-down">Bara de rader när kursens ID finns både på studentens rad samt kursens rad</p>
+        </section>
+        <section>
+          <img src="https://blog.codinghorror.com/content/images/uploads/2007/10/6a0120a85dcdae970b012877702708970c-pi.png" alt="Inner join.">
+        </section>
+        <section>
+          <pre><code class="language-sql">SELECT * FROM students
+LEFT JOIN courses
+ON students.course_id = courses.course_id</code></pre>
+        <p class="fragment fade-down">Vi får tillbaka alla studenter, även om de inte går någon kurs</p>
+        <p class="fragment fade-down">Vi har sagt att den första (left) ska hållas intakt, den andra (right) får sållas</p>
+        </section>
+        <section data-background="white">
+          <img src="http://i.imgur.com/nG7rF1N.png" alt="More joins.">
+        </section>
+        <section>
+          <pre><code class="language-sql">SELECT * FROM students
+RIGHT JOIN courses
+ON students.course_id = courses.course_id</code></pre>
+        <p class="fragment fade-down">Vi får tillbaka samtliga kurser, även om inte det finns någon elev bunden till kursen.</p>
+        <p class="fragment fade-down">Rader som inte matchar blir <em><code>NULL</code></em></p>
+        </section>
+        <section>
+          <img src="https://blog.codinghorror.com/content/images/uploads/2007/10/6a0120a85dcdae970b01287770273e970c-pi.png" alt="left join.">
+        </section>
+      </section>
+      <section>
+        <p><strong>Tänk på</strong></p>
+        <p class="fragment fade-down">Ibland är det enklare att göra två separata queries</p>
+        <p class="fragment fade-down">Viss sortering kan ske i PHP</p>
+        <p class="fragment fade-down"><em>Testa först i PHPMyAdmin</em> om querien ens funkar innan du använder den i PHP</p>
+        <p class="fragment fade-down">Använder du <code><em>header("Location: /")</em></code> så redirectas du innan du hinner se felmeddelande, redirect ska ske när du vet att allting fungerar.</p>
+      </section>
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '90%',
+      width: '70%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js',condition: function (){
+        return !document.body.classList;}},
+        { src: 'plugin/notes/notes.js', async: true },
+        {src : 'lib/prismjs/prism.js'},
+        {src : 'js/print.js'}
+        ]
+      });
+    </script>
+  </body>
+  </html>

@@ -1,0 +1,159 @@
+<html lang="en">
+<head>
+  <!-- <base href="https://jesperorb.github.io/revealjs/"> -->
+  <base href="file:///Users/jesperorb/projects/revealjs/">
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png" />
+  <meta name="description" content="HTTP">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> HTTP </title>
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <style>
+    .reveal .slides section .fragment .highlight-red.visible{
+      color: white;
+      background-color: #2d2d2d;
+      padding-right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+      <!-- SLIDES START HERE -->
+      <section>
+        <section>
+          <h1><em>HTTP-protokollet</em></h1>
+        </section>
+        <section>
+          <h3><em>HyperText Transfer Protocol</em></h3>
+        </section>
+        <section data-background-image="http://vignette3.wikia.nocookie.net/starwars/images/a/ae/Hyperspace_falcon.png/revision/latest?cb=20130312014242">
+        </section>
+        <section>
+          <p>Vi använder en URL för att besöka en hemsida:</p>
+          <p class="fragment slide-down"><span class="fragment highlight-red">https://</span><span class="fragment highlight-red">vecka</span><span class="fragment highlight-red">.nu</span></p>
+          <p class="fragment slide-down">protokoll://domainname.topdomain</p>
+        </section>
+        <section data-background-image="http://files.vladstudio.com/joy/how_internet_works/wall/vladstudio_how_internet_works_1920x1440_signed.jpg">
+        </section>
+        <section>
+          <h3><strong>IP/DNS</strong></h3>
+          <p>Varje enhet på internet har ett unikt IP.</p>
+          <p>Vi kopplar upp oss mot varandras IP via ett domännamn</p>
+          <p class="fragment slide-down">All data skickas via detta protokoll</p>
+        </section>
+        <section>
+          <h1>TCP/IP</h1>
+        </section>
+        <section>
+          <h3><strong>Transmission Control Protocol</strong></h3>
+          <p class="fragment slide-down"><strong>Transmission</strong>: Överföring av data</p>
+          <p class="fragment slide-down"><strong>Control</strong>: Kontrollera att data är skickad</p>
+          <p class="fragment slide-down"><strong>Protocol</strong>: standardiserat sätt</p>
+        </section>
+        <section>
+          <h3><em>HyperText Transfer Protocol</em></h3>
+          <p>En överföring sker på webben sker via HTTP-protokollet</p>
+          <p>Främst via <strong>GET</strong> för att hämta från en server</p>
+          <p class="fragment slide-down"><strong>POST</strong> för att skicka till en server</p>
+        </section>
+        <section>
+          <h3>HTTP</h3>
+          <p><strong>REQUEST</strong> - <em>RESPONSE</em></p>
+          <p><strong>CLIENT</strong> - <em>SERVER</em></p>
+        </section>
+        <section>
+          <h3>Primära metoder</h3>
+          <p><strong>GET</strong>: Hämta data</p>
+          <p><strong>POST</strong>: Skicka data</p>
+          <p><strong>PATCH</strong>: Uppdatera data</p>
+          <p><strong>PUT</strong>: Byta ut data</p>
+          <p><strong>DELETE</strong>: Ta bort data</p>
+        </section>
+        <section data-background="#2d2d2d">
+          <h3>Typisk GET</h3>
+          <pre><code class="hljs http">
+GET /index.html HTTP/1.1
+Host: github.com </code></pre>
+        </section>
+        <section data-background="#2d2d2d">
+          <h3>Typisk GET</h3>
+          <img src="https://s-media-cache-ak0.pinimg.com/originals/8c/d0/6a/8cd06a1e9863595ba76ee9932fc4a164.jpg" alt="Goat">
+        </section>
+        <section data-background="#2d2d2d">
+          <pre><code class="hljs http">HTTP/1.1 200 OK
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;FED17 HomePage bla bla&lt;/title&gt;
+&lt;/head&gt;</code></pre>
+        </section>
+        <section>
+          <h3>HTTP Status Codes</h3>
+          <p>Den bästa: <strong>200 OK</strong></p>
+          <p>Den sämsta: <strong>404 NOT FOUND</strong></p>
+        </section>
+        <section>
+          <img src="https://i.imgur.com/thV9tPv.png" alt="I'm a Teapot">
+          <a style="color: white;" href="https://httpstatuses.com/">httpstatuses.com</a>
+        </section>    
+        <section>
+          <h3>HTTP Headers</h3>
+          <p>Liknande som en html har en <strong>&lt;head&gt;</strong>-tagg samt en <strong>&lt;body&gt;</strong>-tagg</p>
+          <p>Har varje request <strong>HEADERS</strong> och <strong>BODY</strong></p>   
+        </section>
+        <section>
+          <h3><em>HEADERS</em></h3>
+          <p><em>meta data</em> om varje förfrågan</p>
+          <p>Berättar om vilket typ av innehåll som levereras, hur länge innehållet ska samt vilka som får komma åt innehållet</p>
+          <pre><code class="language-js">header("Location: index.php");</code></pre>
+        </section>
+        <section>
+          <h3>BODY</h3>
+          <p>All "synlig" information</p>
+          <p class="fragment fade-down">All HTML</p>
+          <p class="fragment fade-down">Hämtar vi en bild ligger bilden i <em>body</em></p>
+        </section>
+      </section>
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '90%',
+      width: '70%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      {
+        src: 'lib/js/classList.js', condition: function () {
+          return !document.body.classList;
+        }
+      },
+      { src: 'plugin/notes/notes.js', async: true },
+      { src: 'lib/prismjs/prism.js' },
+      { src: 'js/print.js' }
+      ]
+    });
+  </script>
+</body>
+</html>
