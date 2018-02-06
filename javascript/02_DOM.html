@@ -1,7 +1,6 @@
 <html>
 <head>
   <base href="https://jesperorb.github.io/revealjs/">
-  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
   <link rel="stylesheet" href="css/reveal.css">
   <link rel="stylesheet" href="css/theme/default.css">
   <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
@@ -92,8 +91,8 @@
           <img src="https://i.imgur.com/chNbq1r.png">
         </section>
         <section>
-          <p>Oftast hämtar vi ut <em>Element nodes</em> med JavaScript och modiferar dessa.</p>
-          <pre><code class="language-js">$('#menu-toggle').click();</code></pre>
+          <p>Oftast hämtar vi ut <em>Element nodes</em> med JavaScript och modifierar dessa.</p>
+          <pre><code class="language-js">$('#menu-toggle');</code></pre>
           <p><strong>jQuery</strong> ger oss en wrapper runt samtliga <em>element selectors</em></p>
         </section>
         <section>
@@ -137,8 +136,16 @@ console.log(output.innerHTML);</code></pre>
         <section>
           <p>Allting som finns i HTML samt CSS kan manipuleras via JavaScript</p>
           <div class="two-columns">
-            <pre><code style="min-height: 300px" class="liveCoding language-js" data-livecoding-id="getElement" contenteditable>document.getElementById('byId')
-  .style.backgroundColor='green';</code></pre>
+            <pre><code style="min-height: 300px" class="liveCoding language-js" data-livecoding-id="getElement" contenteditable>const byId = document.getElementById('byId');
+byId.style.backgroundColor = 'lightsalmon';
+byId.style.color = 'teal';
+byId.style.fontFamily = 'Comic Sans MS';
+byId.textContent = 'Comic Sans YO';
+const classes = document.getElementsByClassName('byClass');
+for (const oneClass of classes){
+ oneClass.style.color = 'red';
+}
+classes[0].style.color = 'green';</code></pre>
             <div id="getElement">
               <div id="byId">byId</div>
               <div class="byClass">byClass</div>
