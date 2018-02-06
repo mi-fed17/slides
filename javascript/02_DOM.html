@@ -1,0 +1,226 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="DOM Manipulation">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> DOM-manipulation </title>
+  <script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+<style type="text/css">
+  pre[class*="language-"]{
+    margin: 3rem auto;
+  }
+.reveal section img {
+  background: none; box-shadow: none;"
+}
+.reveal .two-columns{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.reveal .two-columns > pre {
+  flex: 2;
+}
+.reveal .two-columns > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.reveal .two-columns > div > * {
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
+  padding: 1rem;
+}
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <h1><em>DOM-manipulation</em></h1>
+      </section>
+      <section>
+        <section>
+          <pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;My home page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;My home page&lt;/h1&gt;
+    &lt;p&gt;Hello, I am Marijn and this is my home page.&lt;/p&gt;
+    &lt;p&gt;I also wrote a book! Read it
+      &lt;a href=&quot;http://eloquentjavascript.net&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </section>
+        <section>
+          <div class="two-columns"><img src="http://eloquentjavascript.net/img/html-boxes.svg" alt="Box Model">
+          <blockquote>For each box, there is an object, which we can interact with to find out things such as what HTML tag it represents and which boxes and text it contains. This representation is called the Document Object Model, or DOM for short.</blockquote></div>
+        </section>
+        <section>
+          <p>Tänka i <em>TRÄD</em></p>
+          <img src="http://eloquentjavascript.net/img/html-tree.svg" alt="tree structure">
+          <p>Dessa är <strong>NODER</strong></p>
+        </section>
+        <section>
+          <p>Tre typer av noder</p>
+          <ul>
+            <li>Element node (den vi oftast använder)</li>
+            <li>Text node</li>
+            <li>Attribute node</li>
+          </ul>
+        </section>
+        <section>
+          <img src="https://i.imgur.com/chNbq1r.png">
+        </section>
+        <section>
+          <p>Oftast hämtar vi ut <em>Element nodes</em> med JavaScript och modiferar dessa.</p>
+          <pre><code class="language-js">$('#menu-toggle').click();</code></pre>
+          <p><strong>jQuery</strong> ger oss en wrapper runt samtliga <em>element selectors</em></p>
+        </section>
+        <section>
+          <p><em>NodeList</em> / <strong>HTMLCollection</strong></p>
+          <p>Det vi får tillbaka är nästan alltid en samling av element som är "Array-like" men inte en faktisk array.</p>
+          <p class="fragment fade-down">Detta betyder att vi kan loopa igenom element.</p>
+          <p class="fragment fade-down">Denna samling är nästan alltid <em>Live</em></p>
+        </section>
+        <section>
+          <pre><code class="language-html">&lt;nav id=&quot;main-nav&quot;&gt;
+  &lt;a href=&quot;home.html&quot; class=&quot;nav-link&quot;&gt;Home&lt;/a&gt;
+  &lt;a href=&quot;about.html&quot; class=&quot;nav-link&quot;&gt;About&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+          <pre><code class="language-js">const nav = document.getElementById('main-nav'); // Always one</code></pre>
+          <pre><code class="language-js">const links = document.getElementsByClassName('nav-link') //Always multiple;
+const links = document.getElementByTagName('a'); //Always multiple</code></pre>
+        </section>
+        <section>
+          <p><code><em>querySelector()</em></code></p>
+          <p>Det närmaste vi kommer jQuery</p>
+          <pre><code class="language-js">const nav = document.querySelector('#main-nav');
+const links = document.querySelectorAll('.nav-link');
+const links = document.querySelectorAll('#main-nav a');</code></pre>
+        </section>
+        <section>
+          <p>När vi fått tag i elementen måste vi kunna manipulera</p>
+          <pre><code class="language-html">&lt;div id=&quot;output&quot;&gt;&lt;/div&gt;</code></pre>
+          <pre><code class="language-js">const output = document.getElementById('output');
+output.textContent = "Hello FED17";
+output.innerText = "Hello FED17, I am the same as above";
+output.innerHTML = &quot;&lt;p&gt;text AND html, dangerous 😅&lt;p&gt;&quot;;</code></pre>
+        </section>
+        <section>
+          <p>På samma sätt kan vi skriva ut varje värde</p>
+          <pre><code class="language-html"><div id="output"><p>Hello!</p></div></code></pre>
+          <pre><code class="language-js">const output = document.getElementById('output');
+console.log(output.textContent);
+console.log(output.innerText);
+console.log(output.innerHTML);</code></pre>
+        </section>
+        <section>
+          <p>Allting som finns i HTML samt CSS kan manipuleras via JavaScript</p>
+          <div class="two-columns">
+            <pre><code style="min-height: 300px" class="liveCoding language-js" data-livecoding-id="getElement" contenteditable>document.getElementById('byId')
+  .style.backgroundColor='green';</code></pre>
+            <div id="getElement">
+              <div id="byId">byId</div>
+              <div class="byClass">byClass</div>
+              <div class="byClass">byClass </div>
+              <div class="byTag">byTag</div>
+            </div>
+          </div>
+        </section>
+        <section>
+          <p>Skapa element och lägg till i DOMen</p>
+          <pre><code class="language-js">const div = document.createElement('div');
+document.body.appendChild(div);</code></pre>
+          <pre><code class="language-js">const p = document.createElement('p');
+const text = document.createTextNode('My text!');
+p.appendChild(text);
+document.body.appendChild(p);</code></pre>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h1><strong>Traversing</strong></h1>
+        </section>
+        <section>
+          <img src="http://eloquentjavascript.net/img/html-tree.svg">
+        </section>
+        <section>
+          <img src="http://eloquentjavascript.net/img/html-links.svg">
+        </section>
+        <section>
+          <ul>
+            <li><code><em>parentElement</em></code></li>
+            <li><code><em>children</em></code></li>
+            <li><code><em>nextSibling</em></code></li>
+            <li><code><em>previousSibling</em></code></li>
+            <li><code><em>firstElementChild</em></code></li>
+            <li><code><em>lastElementChild</em></code></li>
+          </ul>
+        </section>
+        <section>
+          <h1><em>Koda koda</em></h1>
+        </section>
+      </section>
+      <section>
+        <p>Eftermiddag: övningar på zenit / GitHub</p>
+      </section>
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+  Reveal.initialize({
+    transition: 'zoom',
+    height: '80%',
+    width: '70%',
+    controls: true,
+    progress: true,
+    history: true,
+    keyboard: true,
+    overview: true,
+    center: true,
+    dependencies: [
+      { src: 'lib/js/classList.js',condition: function (){
+        return !document.body.classList;}},
+      { src: 'plugin/notes/notes.js', async: true },
+      { src : 'lib/prismjs/prism.js'},
+      { src : 'js/print.js'}
+      // { src: 'plugin/livecoding/live-coding.js', async: true, condition: function() { return !!document.body.classList; }
+      // }
+      ]
+    });
+
+  const editableCodeBoxes = document.getElementsByClassName('liveCoding');
+  for(const editableElement of editableCodeBoxes){
+    editableElement.addEventListener('blur', function(){
+      Prism.highlightAll();
+    });
+
+    editableElement.addEventListener('input', function() {
+      eval(this.innerText);
+    });
+  }
+</script>
+</body>
+</html>
