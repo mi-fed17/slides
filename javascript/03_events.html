@@ -1,0 +1,220 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="Events">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> Events </title>
+  <script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+<style type="text/css">
+  pre[class*="language-"]{
+    margin: 3rem auto;
+  }
+.reveal section img {
+  background: none; box-shadow: none;"
+}
+.reveal .two-columns{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.reveal .two-columns > pre {
+  flex: 2;
+}
+.reveal .two-columns > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.reveal .two-columns > div > * {
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
+  padding: 1rem;
+}
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <section>
+          <h1><em>Events & Scope</em></h1>
+        </section>
+      </section>
+      <section>
+        <section><h1><strong>Funktioner</strong></h1></section>
+        <section>
+          <p>En funktion är ett block av kod som du kan återanvända. Du kapslar in och grupperar kod så du kan kalla på den när du behöver den.</p>
+          <pre><code class="language-js">function add(a,b){
+  return a + b;
+}</code></pre>
+        </section>
+        <section>
+          <p>När vi använder <code><em>return</em></code> måste vi alltid spara värdet som returneras</p>
+          <pre><code class="language-js">const result = add(5,5);</code></pre>
+          <p>Samma med funktionerna vi använde igår</p>
+          <pre><code class="language-js">const div = document.getElementById('byId');</cde></pre>
+          <p class="fragment fade-down">Vi kan bara returnera <strong>1</strong> sak från en funktion</p>
+        </section>
+        <section>
+          <p>Det finns dock två sätt att skriva funktioner</p>
+          <p>Function declaration</p>
+          <pre><code class="language-js">function add(a,b){
+  return a + b;
+}</code></pre>
+          <p>Function expression</p>
+          <pre><code class="language-js">const add = function(){
+  return a + b;
+}</code></pre>
+        <p class="fragment fade-down">De gör samma sak, den ena är dock en <em>anonym funktion</em> sparad i en variabel</p>
+        </section>
+        <section>
+          <p><em>Hoisting</em></p>
+          <p>Alla variabler och function declarations "skjuts upp" lägnst upp i scopet oavsett var de är skapade</p>
+          <p><em>Scope</em> kan vara antingen <strong>Global</strong> eller <strong>function</strong> scope, global är i hela dokumentet medan function scope är inuti en funktion</p>
+        </section>
+        <section>
+          <p><em>Skillnaden</em></p>
+          <p>Function declaration <em>hoistas</em></p>
+          <pre><code class="language-js">
+function callMe(){
+  //I get put at the top
+}</code></pre>
+          <p>Function expression <em>hoistas INTE</em></p>
+          <pre><code class="language-js">const callMe = function(){
+  // I stay where I am.
+</code></pre>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h1><strong>Events</strong></h1>
+        </section>
+        <section>
+          <pre><code class="language-html">&lt;button id=&quot;button&quot;&gt;click me &lt;/button&gt;</code></pre>
+          <pre><code class="language-js">const button = document.getElementById('button');
+
+button.addEventListener('click', function(){
+  // Do logic
+})</code></pre>
+        <pre><code class="language-js">const button = document.getElementById('button');
+
+button.onclick = function(){
+  // Do logic;
+}</code></pre>
+        </section>
+        <section>
+          <p>Denna funkar men jag råder er att inte använda den</p>
+          <pre><code class="language-js">&lt;button onclick=&quot;callMe()&quot;&gt;Click me&lt;/button&gt;
+</code></pre>
+          <p>JS i JavaScript-filen, HTML i HTML-filen, CSS i CSS-filen</p>
+        </section>
+        <section>
+          <p>Vi kan binda events till <em>samtliga</em> element</p>
+          <p class="fragment fade-down">Samt lyssna på väldigt många events</p>
+          <ul class="fragment fade-down">
+            <li><code><em>change</em></code></li>
+            <li><code><em>keyup</em></code></li>
+            <li><code><em>keydown</em></code></li>
+            <li><code><em>blur</em></code></li>
+          </ul>
+        </section>
+        <section>
+          <ul>
+            <li>onmouseover</li>
+            <li>onmouseout</li>
+          </ul>
+          <p>Ska du köra JavaScript när du hovrar OK, ska du styla, använd <code><em>:hover</em></code> i CSS</p>
+        </section>
+        <section>
+          <p>Det som skrivs innanför den anonyma funktioner är det som kommer att köras varje gång du klickar på knappen. </p>
+          <p><em>Första steget</em>: console.log och se om du klickar på rätt element eller om klickfunktionen fungerar</p>
+          <pre><code class="language-js">const button = document.getElementById('button');
+button.addEventListener('click', function(){
+  console.log("It's working! It's working!");
+})</code></pre>
+        </section>
+        <section>
+          <p>Om vi har 5 st paragrafer, hur vet vi vilken vi har klickat på?</p>
+          <p class="fragment fade-down">index kan användas men är riskabelt, saker kan flyttas runt och få ett annat index</p>
+          <pre class="fragment fade-down"><code class="language-js">listItem.addEventListener('click', function(){
+  console.log(this);
+})</code></pre>
+          <p class="fragment fade-down"><code><em>this</em></code> pekar på exakt det elementet vi har klickat på, förutsätt att en eventlistener ligger på elementet</p>
+        </section>
+        <section>
+          <pre><code class="language-html">&lt;button style="color: pink;" id=&quot;myButton&quot;&gt;Click me&lt;/button&gt;</code></pre>
+          <pre><code class="language-js">const button = document.getElementById('myButton');
+button.addEventListener('click', function(){
+  console.log(this.id);
+  console.log(this.style);
+})</code></pre>
+        </section>
+        <section>
+          <p><em>Context</em></p>
+          <p><code><strong>this</strong></code> syftar på <em>kontexten</em></p>
+          <p>Vi har 5 olika element av samma typ, eller så har vi 5 olika objekt, varje nytt element eller objekt har ett nytt <code><strong>this</strong></code></p>
+          <p class="fragment fade-down">Varning: <code>this</code> kan ändras</p>
+        </section>
+      </section>
+      <section>
+        <h4><em>Eftermiddag</em></h4>
+        <p>Övingar på zenit / GitHub</p>
+      </section>
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+  Reveal.initialize({
+    transition: 'zoom',
+    height: '80%',
+    width: '70%',
+    controls: true,
+    progress: true,
+    history: true,
+    keyboard: true,
+    overview: true,
+    center: true,
+    dependencies: [
+      { src: 'lib/js/classList.js', condition: function (){
+        return !document.body.classList;}
+      },
+      { src: 'plugin/notes/notes.js', async: true },
+      { src : 'lib/prismjs/prism.js'},
+      { src : 'js/print.js'}
+      // { src: 'plugin/livecoding/live-coding.js', async: true, condition: function() { return !!document.body.classList; }
+      // }
+      ]
+    });
+
+  const editableCodeBoxes = document.getElementsByClassName('liveCoding');
+  for(const editableElement of editableCodeBoxes){
+    editableElement.addEventListener('blur', function(){
+      Prism.highlightAll();
+    });
+
+    editableElement.addEventListener('input', function() {
+      eval(this.innerText);
+    });
+  }
+</script>
+</body>
+</html>
