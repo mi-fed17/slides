@@ -1,0 +1,225 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="String management + ES6">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> String management + ES6 </title>
+  <script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+<style type="text/css">
+  pre[class*="language-"]{
+    margin: 3rem auto;
+  }
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+        <section>
+          <section>
+            <h1><strong>Strängar <br>&  <br>Element</strong></h1>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1><em>ES6</em></h1>
+          </section>
+          <section>
+            <p>ES6</p>
+            <p>JavaScript heter <span style="font-weight: 700">ECMAScript</span></p>
+            <p class="fragment fade-down"><em>European Computer Manufacturers Association</em>: de som tar hand om språket</p>
+            <p class="fragment fade-down">ES6 "släpptes" 2009, blev upplockat av webbläsare runt 2015 och har nu börjat få bra stöd</p>
+            <p class="fragment fade-down">Man brukar prata om ES5/ES6 då det var i den övergången det skedde mest förändringar</p>
+          </section>
+          <section>
+            <p><em>ES6 Features</em></p>
+            <ul>
+              <li><code>let/const</code></li>
+              <li>Arrow functions <em>=></em></li>
+              <li>for...of</li>
+              <li>Template literals / Template strings</li>
+              <li>Destructuring</li>
+              <li>Default + Rest + Spread</li>
+              <li>+ massa annat</li>
+            </ul>
+          </section>
+          <section>
+            <p>let/const</p>
+            <pre><code class="language-js">const a = "I AM CONSTANT";
+if(true){
+  // Only exists in 'if'
+  let a = 5;    
+}</code></pre>
+          <p><code><em>let</em></code> förhåller sig även till block scope</p>
+          </section>
+          <section>
+            <p>Arrow function</p>
+            <p>Ett kompaktare sätt att skriva anonyma funktioner</p>
+            <p>En vanlig funktioner binder om <code><em>this</em></code></p>
+            <p class="fragment fade-down">Arrow function behåller <code><em>this</em></code></p>
+            <pre><code class="language-js">const myArrow = () => {
+  console.log("Hello");
+}</code></pre>
+          </section>
+        </section>
+        <section>
+          <section><code><em>typeof</em></code> "hello world"</section>
+          <section>
+            <p>Den vanligaste typen vi använder</p>
+            <pre><code class="language-js">const string = "hello world";
+const string = 'hello world';</code></pre>
+            <p class="fragment fade-down">JavaScript kan konvertera strängar till HTML</p>
+            <p class="fragment fade-down">JavaScript gör ingen skillnad på <em>"</em> och <strong>'</strong></p>
+          </section>
+          <section>
+            <p>Template literals</p>
+            <pre><code class="language-js">const string = `Hello World`;
+const name = `Jesper`;
+const output = `Hello ${name}`;</code></pre>
+            <p>När du vill ha ett värde i en sträng: <code><em>${}</em></code></p>
+            <p>`backticks` används, var noga med vilket håll de pekar</p>
+          </section>
+          <section>
+            <p>Underlättar arbetet med DOMen</p>
+            <pre><code class="language-js">const output = document
+  .getElementById('output');
+const name = `Jesper`;
+output.innerHTML = `&lt;p&gt;My name is ${name}&lt;p&gt;`;</code></pre>
+          </section>
+          <section>
+            <p>Kan hantera linebreaks</p>
+            <pre><code class="language-js">const output = document
+  .getElementById('output');
+const name = `Jesper`;
+output.innerHTML = `
+  &lt;div&gt;
+    &lt;p&gt;My name is ${name}&lt;p&gt;
+  &lt;/div&gt;`;</code></pre>
+          </section>
+          <section>
+            <p><em>String methods</em></p>
+            <ul>
+              <li>.substr() / .substring()</li>
+              <li>.slice()</li>
+              <li>.split()</li>
+              <li>.includes()</li>
+              <li>.repeat()</li>
+              <li>.charAt()</li>
+              <li>.replace()</li>
+            </ul>
+          </section>
+          <section>
+            <p><em>Strings</em> är i stort sett en array</p>
+            <p class="fragment fade-down">Enklaste sättet att manipulera en sträng är att använda de inbyggda funktionerna eller konvertera till en array</p>
+            <pre><code class="language-js">const myString = `Hello you`;
+myString.split(''); // ["H", "e", "l", "l", "o", " ", "y", "o", "u"];</code></pre>
+            <p class="fragment fade-down">När du har en array kan du manipulera ytterligare</p>
+          </section>
+          <section>
+            <p>Array methods</p>
+            <ul>
+              <li>.split()</li>
+              <li>.join()</li>
+              <li>.contains()</li>
+              <li>.sort()</li>
+              <li>.slice() / .splice()</li>
+              <li>.find()</li>
+            </ul>
+          </section>
+          <section>
+            <p><em>HTMLCollection</em></p>
+            <p>HTMLCollection är <em>"array-like"</em></p>
+            <p class="fragment fade-down">Vilket betyder att array-metoder inte fungerar på en sådan samling</p>
+            <pre><code class="language-js">const pTags = document
+  .getElementsByTagName('p');
+const converted = Array.from(pTags);
+converted.pop();</code></pre>
+          </section>
+          <section>
+            <p><em>.innerHTML</em></p>
+            <p><code><em>.innerHTML</em></code> tar en sträng och konverterar det som kan konverteras till HTML</p>
+            <p class="fragment fade-down">Bra för större kodblock men ersätter alltid allt i elementet</p>
+            <pre class="fragment fade-down"><code class="language-js">const output = document
+  .getElementById('output');
+output.innerHTML = `
+  &lt;div&gt;
+    &lt;p&gt; Hej &lt;/p&gt;
+  &lt;/div&gt;`;</code></pre>
+          </section>
+          <section>
+            <em>.insertAdjacentHTML</em>
+            <pre><code class="language-js">
+const data = `
+  &lt;div&gt;
+    &lt;p&gt; Hej &lt;/p&gt;
+  &lt;/div&gt;`;
+output.insertAdjacentHTML('beforeend', data);</code></pre>
+          <p class="fragment fade-down">Första argumentet är på vilken plats som koden ska läggas in: 'beforebegin, 'afterbegin', 'beforeend', 'afterend'</p>
+          </section>
+          <section>
+            <p>Så fort vi lägger till något i HTML med så tappas koplingen mellan variabel och DOM. </p>
+            <p class="fragment fade-down">Lägger vi till något dynamiskt måste vi även binda events till detta element dynamiskt</p>
+            <p class="fragment fade-down">Ibland är det lättare att ersätta större HTML-block än att försöka lägga in värden på en specifik plats</p>
+          </section>
+        </section>
+
+        <section>
+          <h2><em>Eftermiddag</em></h2>
+          <p>Övningar på zenit / GitHub</p>
+        </section>
+
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+  Reveal.initialize({
+    transition: 'zoom',
+    height: '80%',
+    width: '70%',
+    controls: true,
+    progress: true,
+    history: true,
+    keyboard: true,
+    overview: true,
+    center: true,
+    dependencies: [
+      { src: 'lib/js/classList.js', condition: function (){
+        return !document.body.classList;}
+      },
+      { src: 'plugin/notes/notes.js', async: true },
+      { src : 'lib/prismjs/prism.js'},
+      { src : 'js/print.js'}
+      // { src: 'plugin/livecoding/live-coding.js', async: true, condition: function() { return !!document.body.classList; }
+      // }
+      ]
+    });
+
+  const editableCodeBoxes = document.getElementsByClassName('liveCoding');
+  for(const editableElement of editableCodeBoxes){
+    editableElement.addEventListener('blur', function(){
+      Prism.highlightAll();
+    });
+
+    editableElement.addEventListener('input', function() {
+      eval(this.innerText);
+    });
+  }
+</script>
+</body>
+</html>
