@@ -1,0 +1,260 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="Objects & This">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> Objects & This </title>
+  <script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+<style type="text/css">
+  pre[class*="language-"]{
+    margin: 3rem auto;
+  }
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+        <section>
+          <section>
+            <h1><strong>Objects & `this`</strong></h1>
+          </section>
+          <section>
+            <p>Typ alla grejer som behövs till inlämningsuppgiften finns i övningsuppgifterna, det gäller att plocka ihop allt</p>
+            <p class="fragment fade-down"><em>Bra idé att försöka lösa övningarna, annars se igenom lösningsförslagen och försök att förstår hur koden fungerar</em></p>
+            <p class="fragment fade-down"><strong>Gör kommentarer och använd Debuggern i Chrome/Firefox/Safari/Opera</strong></p>
+          </section>
+          <section>
+            <p>Ett objekt är en samling av <code><em>key/value</em></code>-par</p>
+            <pre><code class="language-js">const obj = {
+  property: 'value'
+};</code></pre>
+          </section>
+          <section>
+            <p>Varje nytt objekt har ett eget <code><em>this</em></code></p>
+            <pre><code class="language-js">// We may look the same but we are not
+const arrayOfObjects = [
+  {
+    name: "Jesper"
+  },
+  {
+    name: "Jesper"
+  }
+];</code></pre>
+          <p class="fragment fade-down">Varje nytt element i DOMen har ett nytt <code><em>this</em></code></p>
+          </section>
+          <section>
+            <p><em>context</em></p>
+            <p><code><strong>this</strong></code> syftar på contexten</p>
+            <p>contexten är i vilket objekt vi befinner oss i</p>
+            <pre><code class="language-js">console.log(this); // window
+
+const button = document.getElementById('button');
+
+button.addEventListener('click', function(){
+  console.log(this) // &lt;button&gt; Click me&lt;/button&gt;
+});</code></pre> 
+          <p class="fragment fade-down">Ett element är ett objekt</p>
+          </section>
+          <section>
+            <p>Objekt kan ha funktioner</p>
+            <p><code><em>getElementById</em></code> är en funktion som är bunden till objektet <code><strong>document</strong></code></p>
+            <pre><code class="language-js">const document = {
+  getElementById: function(id){
+    // do magic stuff
+  }
+}
+document.getElementById('id');</code></pre>
+          </section>
+          <section>
+            <p>Vi kan referera till objektets egenskaper inifrån objektet</p>
+            <pre><code class="language-js">const person = {
+  name: "Jesper",
+  printName: function(){
+    // print the property 'name' of this object
+    console.log(this.name);
+  }
+}
+console.log(person.name); // this does the same thing
+person.printName();       // this does the same thing</code></pre> 
+          </section>
+          <section>
+            <pre><code class="language-js">function printMe(){
+  console.log(this);
+}</code></pre>
+            <p>Vad är this här?</p>
+          </section>
+          <section>
+            <pre><code class="language-js">const obj = {
+  printMe: function(){
+    console.log(this);
+  }
+}</code></pre>
+            <p>Vad är this här?</p>
+          </section>
+          <section>
+            <h3><em>Constructor Pattern</em></h3>
+          </section>
+          <section>
+              <p>En constructor är bara en funktion, inget mer.</p>
+              <p>Dock en funktion vars enda uppgift är att skapa objekt</p>
+              <p class="fragment fade-down"><strong>En objektfabrik</strong></p>
+          </section>
+          <section>
+            <pre><code class="language-js">function Book(name, year){
+  this.name = name;
+  this.year = year;
+}</code></pre>
+            <p class="fragment fade-down">Vad är this i det här fallet?</p>
+          </section>
+          <section>
+            <pre><code class="language-js">function Book(name, year){
+  this.name = name;
+  this.year = year;
+}</code></pre>
+            <pre><code class="language-js">const book1 = new Book('Pesten', 1947);
+const book2 = new Book('Darling River', 2010);</code></pre>
+            <p class="fragment fade-down">nyckelordet <code><em>new</em></code> är viktigt, annars skapas inget nytt objekt, inget nytt this skapas då</p>
+          </section>
+          <section>
+            <pre><code class="language-js">const book1 = new Book('Pesten', 1947);</code></pre> 
+            <p>Det vi skapar är detta:</p>
+            <pre><code class="language-js">const book1 = {
+  name: 'Pesten',
+  year: 1947
+}</code></pre>
+          </section>
+          <section>
+            <pre><code class="language-js">function Book(name, year){
+  this.name = name;
+  this.year = year;
+  this.getInfo = function(){
+    console.log(`The book ${this.name} was released in ${this.year}`);
+  }
+}</code></pre>
+            <pre><code class="language-js">const book1 = new Book('Pesten', 1947);
+const book2 = new Book('Darling River', 2010);
+book2.getInfo();  //The book Pesten was released in 1947
+book1.getInfo();  //The book Darling River was released in 2010 </code></pre>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1><em>Closures</em></h1>
+          </section>
+          <section>
+            <pre><code class="language-js">function add(a,b){
+  return a + b;
+}
+
+const result = add(10,10); // === 20
+</code></pre>
+          <pre class="fragment fade-down"><code class="language-js">const result = add(10,10) + add(10,10);</code></pre>
+          <pre class="fragment fade-down"><code class="language-js">const result = add(add(10,10), add(10,10));</code></pre>
+          </section>
+          <section>
+            <p>Vi vill använda <code><em>return</em></code> för att det tillåter oss att fortsätta göra beräkningar på det som returneras</p>
+            <pre><code class="language-js">function createParagraph(content){
+  return `&lt;p&gt;${content}&lt;/p&gt;`;
+}
+document.body.innerHTML = createParagraph("Hello I am argument");</code></pre>
+          </section>
+          <section>
+            <p>När en funktion har körts klart så försvinner allting ur minnet</p>
+            <pre><code class="language-js">const a = 10; // yea im right here
+function makeB() {
+  const b = 10;
+}
+makeB();
+// After this, 'b' seize to exist, the function is done.</code></pre>
+          </section>
+          <section>
+            <pre><code class="language-js">function createFunction(){
+  const name = "Jesper";
+  function printName(){
+    console.log(name);
+  }
+  return printName;
+}</code></pre>
+          <p class="fragment fade-down">Vad händer om vi kallar på <code><em>createFunction();</em></code></p>
+          <p class="fragment fade-down">En funktion returneras, <code><strong>console.log</strong></code> kommer INTE kallas på</p>
+          </section>
+          <section>
+            <pre><code class="language-js">function createFunction(){
+  const name = "Jesper";
+  function printName(){
+    console.log(name);
+  }
+  return printName;
+}
+const printName = createFunction();
+printName();</code></pre>
+          <p class="fragment fade-down"><code><em>createFunction()</em></code> har körts klart och <code><strong>name</em></strong></code> borde inte finnas längre</p>
+          <p class="fragment fade-down">När vi skapar en funktion i en funktion så sparas de variabler som fanns i det yttre scopet när funktionen kallades på</p>
+          </section>
+          <section>
+            <p><em>Closure</em></p>
+            <p>När vi skapar en funktion inuti en annan funktion så kommer den inre funktionen ihåg det yttre scopet som funktionen kallades på i</p>
+            <p>I vanliga fall så kör en funktion klart och sen försvinner alla varibler som fanns i den funktionen.</p>
+          </section>
+        </section>
+
+        <section>
+          <h3><em>Eftermiddag</em></h3>
+          <p>Övningar på zenit / Github</p>
+        </section>
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+  Reveal.initialize({
+    transition: 'zoom',
+    height: '80%',
+    width: '70%',
+    controls: true,
+    progress: true,
+    history: true,
+    keyboard: true,
+    overview: true,
+    center: true,
+    dependencies: [
+      { src: 'lib/js/classList.js', condition: function (){
+        return !document.body.classList;}
+      },
+      { src: 'plugin/notes/notes.js', async: true },
+      { src : 'lib/prismjs/prism.js'},
+      { src : 'js/print.js'}
+      // { src: 'plugin/livecoding/live-coding.js', async: true, condition: function() { return !!document.body.classList; }
+      // }
+      ]
+    });
+
+  const editableCodeBoxes = document.getElementsByClassName('liveCoding');
+  for(const editableElement of editableCodeBoxes){
+    editableElement.addEventListener('blur', function(){
+      Prism.highlightAll();
+    });
+
+    editableElement.addEventListener('input', function() {
+      eval(this.innerText);
+    });
+  }
+</script>
+</body>
+</html>
