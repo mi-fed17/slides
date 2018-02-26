@@ -1,0 +1,363 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="Asynchronous JavaScript">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> Asynchronous JavaScript </title>
+  <script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+<style type="text/css">
+  pre[class*="language-"]{
+    margin: 3rem auto;
+  }
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+      <!-- SLIDES START HERE -->
+      <section>
+        <section>
+          <h1><strong>Asynchronous JavaScript</strong></h1>
+        </section>
+      </section>
+      
+
+      <!-- ASYNC JAVASCRIPT -->
+      <section>
+        <section>
+          <h1><em>Sync vs. Async JavaScript</em></h1>
+        </section>
+        <section>
+            <p>Du står i kö.</p>
+            <p class="fragment fade-down">Din kompis bestämmer sig för att springa iväg <br/>och köpa något att äta i kön.</p>
+            <p class="fragment fade-down">Du behåller platsen i kön.</p>
+            <p class="fragment fade-down">Kompisen kommer tillbaka med käket och höjer stämningen rejält.</p>
+            <p class="fragment fade-down"><strong>Så funkar asynkront JavaScript</strong></p>
+        </section>
+        <section>
+          <p>men...</p>
+          <p class="fragment fade-down">Du vet inte om du kommer att stå kvar på samma plats i kön</p>
+          <p class="fragment fade-down">Kön kanske plötsligt rör sig snabbt och du är inne</p>
+          <p class="fragment fade-down">Kompisen kanske chansar ändå och springer iväg</p>
+          <p class="fragment fade-down"><strong>I JavaScript chansar vi inte för då går det garanterat åt helvete</strong></p>
+        </section>
+        <section>
+          <pre><code class="language-js">const button = document.getElementById('button');
+const globalVariable;
+
+button.addEventListener('click', function(){
+  globalVariable = "Clicked!";
+})
+console.log(globalVariable);</code></pre>
+        <p><em>Vad skrivs ut i <code>console.log</code>?</em></p>
+        </section>
+        <section>
+          <h3><strong>blocking code</strong></h3>
+          <p>Koden läses typ uppifrån och ner</p>
+          <pre class="fragment fade-down"><code class="language-js">//Can take forever
+for(let i = 0; i < 100000000000000; i++){}</code></pre>
+          <p class="fragment fade-down">Har du en fet loop kommer den att blockera resterande kod</p>
+          <p class="fragment fade-down">Vi kan garantera att kod körs som vi vill men vi får långsammare kod.</p>
+        </section>
+        <section data-background="#1B2B34">
+          <h3><em>call stack</em></h3>
+          <pre><code class="language-js">function foo(){
+  return "Pffft!"; //remove from stack
+}
+function bar(){
+  foo();
+}</code></pre>
+<pre class="fragment fade-down"><code class="language-js">bar();</code></pre>
+        <div class="fragment fade-down" style="position: absolute; 
+            top: 100; 
+            right: 50; 
+            height: 400px; 
+            width: 300px; 
+            background-color: #eee; 
+            border-radius: 10px;">
+          <p style="color: white; background-color: #555" class="fragment fade-down">call stack</p>
+          <p style="color: #555" class="fragment fade-down">bar();</p>
+          <p style="color: #555" class="fragment fade-down">foo();</p>
+        </div>
+        </section>
+        <section data-background="#1B2B34">
+          <h3><em>call stack</em></h3>
+          <pre><code class="language-js">
+//Calls itself
+function foo(){
+  foo(); //Add to stack
+}</code></pre>
+<pre class="fragment fade-down"><code class="language-js">foo();</code></pre>
+        <div class="fragment fade-down" style="position: absolute; 
+            top: 100; 
+            right: 50; 
+            height: 400px; 
+            width: 300px; 
+            background-color: #eee; 
+            border-radius: 10px;">
+          <p style="color: white; background-color: #555" class="fragment fade-down">call stack</p>
+          <p style="color: #555" class="fragment fade-down">foo();</p>
+          <p style="color: #555" class="fragment fade-down">foo();</p>
+          <p style="color: #555" class="fragment fade-down">foo();</p>
+          <p style="color: #555" class="fragment fade-down">foo();</p>
+          <p style="color: #555" class="fragment fade-down">foo();</p>
+          <p style="color: #555" class="fragment fade-down">foo();</p>
+          <p style="color: #555" class="fragment fade-down">foo();</p>
+        </div>
+        <div class="fragment fade-left" style="position: absolute; display: flex; justify-content: center; align-items: center; top:0; left: 0; width: 100%; height: 100%; background-color: #1B2B34">
+          <h1><em>STACK OVERFLOW</em></h1>
+        </div>
+        </section>
+        <section>
+          <h3><strong>non blocking code</strong></h3>
+          <p><em>AJAX</em> & <strong>setTimout()</strong></p>
+          <p class="fragment fade-down">Funktioner eller kodblock som inte blockerar <em>call stack</em></p>
+          <p class="fragment fade-down">I princip placeras dessa funktioner i en annan stack som hanteras av <em>event loop</em></p>
+        </section>
+        <section data-background="#1B2B34" data-transition="none">
+          <pre><code class="language-js">//non blocking
+console.log('Starting Sequence!');
+
+setTimeout(function(){
+  console.log('Hello from timeout!');
+}, 250);
+
+console.log('Ending Sequence!');</code></pre>
+        </section>
+        <section data-background="#1B2B34" data-transition="none">
+          <pre><code class="language-js">//non blocking
+console.log('Starting Sequence!');
+
+setTimeout(function(){
+  console.log('Hello from timeout!');
+}, 0); //No timeout, 0 milliseconds!
+
+console.log('Ending Sequence!');</code></pre>
+        </section>
+        <section data-background-image="http://i.imgur.com/7dn74Nj.gif">
+          
+        </section>
+        <section>
+          <div style="float: left; background-color: white; height: 400px; width: 300px; border-radius: 10px;">
+            <strong>Call stack</strong>
+            <p style="color: #555">foo();</p>
+            <p style="color: #555">bar();</p>
+          </div>
+          <div style="float: right; background-color: white; height: 400px; width: 300px; border-radius: 10px;">
+            <strong>Event loop</strong>
+            <p style="color: #555">setTimeout();</p>
+            <p style="color: #555">setTimeout();</p>
+            <p style="color: #555">setTimeout();</p>
+            <p style="color: #555">setTimeout();</p>     
+          </div>
+          <p class="fragment fade-down">Event loopen kollar först om call stack är tom eller inte</p>
+        </section>
+        <section data-background="#1B2B34">
+          <pre><code class="language-js">setTimeout(function(){
+  console.log('Hello from timeout!');
+}, 0); //No timeout, 0 milliseconds!</code></pre>
+<p class="fragment fade-down">Oberoende av tid som sätts så kommer koden att</br/> först hanteras av <em>event loop</em> sedan läggas till i <em>call stack</em></p>
+<p class="fragment fade-down"><em>Alltid asynchronous</em></p>
+        </section>
+        <section>
+          <p><em style="padding: 1rem;"><a style="color: white" href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">Philip Roberts: What the heck is the event loop anyway</a></em></p>
+          <p><em style="padding: 1rem;"><a style="color: white" href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">https://www.youtube.com/watch?v=8aGhZQkoFbQ</a></em></p>
+        </section>
+        <section>
+          <h3>Detta gäller <code><em>setTimeout</em></code></em> och <code><em>setInterval</em></code></h3>
+          <h3><strong>Samt alla anrop till en databas från JavaScript</strong></h3>
+        </section>
+        <section>
+          <p>Alla anrop till databaser via JavaScript sker via AJAX</p>
+          <p><strong>Asynchronous JavaScript And XML</strong></p>
+        </section>
+      </section>
+
+      <section>
+      <section>
+            <h1>JSON</h1>
+            <em>JavaScript Object Notation</em>
+          </section>
+          <section>
+            <h3>JSON</h3>
+            <p class="fragment slide-down">Subset of ECMAScript Objects</p>
+            <p class="fragment slide-down">Kommer ifrån JavaScript</p>
+            <p class="fragment fade-down">Standard sätt att skicka data I JavaScript</p>
+
+          </section>
+          <section data-background="#1B2B34">
+            <pre><code class="language-json">{
+  "name": "Gurt Flurgur",
+  "weapon": "Rusty knife",
+  "hp": "10"
+  "warCry": "function(){
+    return 'ugh';
+  }"
+}</code></pre>
+          </section>
+          <section>
+            <h3><strong>Allowed datatypes</strong></h3>
+            <ul class="fragmet slide-down">
+              <li>Number</li>
+              <li>String</li>
+              <li>Bool</li>
+              <li>Array</li>
+              <li>Object</li>
+              <li>Whitespace</li>
+              <li>Null</li>
+            </ul>
+          </section>
+          <section>
+            <h3><strong>Unallowed datatypes</strong></h3>
+            <p>function()</p>
+            <p>undefined</p>
+            <p class="fragment slide-down"><em>DATA SOM DATA</em>: Vi kan skicka med en function men vi ska inte</p>
+          </section>
+          <section data-background="#1B2B34">
+            <pre><code class="language-json">{
+  "name": "Gurt Flurgur",
+  "weapon": "Rusty knife",
+  "hp": "10",
+}</code></pre>
+          </section>
+          <section>
+            <h3>Läsbart för datorn</h3>
+            <p class="fragment slide-down"><strong>JSON</strong> är standarden för att skicka information på webben</p>
+            <p class="fragment slide-down">I princip ett mer strukturerat och strikt objekt</p>
+          </section>
+          <section>
+            <h3>Key / Value pair</h3>
+            <p class="fragment slide-down"></p>
+          </section>
+          <section>
+            <h3>Serialization</h3>
+            <p class="fragment slide-down">Processen att ta ett objekt och konvertera den till en sträng</p>
+            <p class="fragment slide-down">Alla värden som skickas med måste vara i form av en sträng</p>
+            <p class="fragment slide-down">Datorn ska kunna veta hur den ska konvertera tillbaka till ett objekt</p>
+            <p class="fragment slide-down">I JavaScript: <strong>JSON.stringify()</strong></p>
+          </section>
+          <section>
+            <h3>Parsing</h3>
+            <p class="fragment slide-down">Även kallat <strong>de-serialization</strong></p>
+            <p class="fragment slide-down">När vi väl ska använda data från <em>JSON</em></p>
+            <p class="fragment slide-down">Konvertera tillbaka till ett objekt</p>
+            <p class="fragment slide-down">I JavaScript: <strong>JSON.parse()</strong></p>
+          </section>
+          <section>
+            <h3>JSON-file</h3>
+            <p class="fragment slide-down">Filändelse: <strong>.json</strong></p>
+            <p class="fragment slide-down">JSON strukutureras på detta sätt för att data ska skickas</p>
+          </section>
+        </section>
+        
+
+       <!-- PROMISES --> 
+      <section>
+        <section>
+          <h1><em>fetch()</em></h1>
+        </section>
+        <section>
+          <blockquote><strong>fetch()</strong> allows you to make network requests similar to <strong>XMLHttpRequest</strong>. The main difference is that the Fetch API uses <em>Promises</em>, which enables a simpler and cleaner API, avoiding callback hell and having to remember the complex API of XMLHttpRequest.</blockquote>
+          <a href="https://developers.google.com/web/updates/2015/03/introduction-to-fetch" class="reference">Ref: Google Dev: 
+Introduction to fetch()</a>
+        </section>
+
+        <section data-background-image="https://media.giphy.com/media/tVWChhzgWdTzO/giphy.gif">
+          
+        </section>
+        <section>
+          <blockquote>
+            The Promise object is used for <em>asynchronous</em> computations. A Promise represents a value which <strong>may be available now, or in the future, or never.</strong>
+          </blockquote>
+          <p class="fragment fade-down">Wrappar vårt värde i ett <em>Promise object</em></p>
+          <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="reference">Ref: MDN - Promises</a>
+        </section>
+        <section>
+          <ul>
+            <li><em>pending</em>: initial state, not fulfilled or rejected.</li>
+            <li><em>fulfilled</em>: meaning that the operation completed successfully.</li>
+           <li><em>rejected</em>: meaning that the operation failed.</li>    
+          </ul>
+          <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="reference">Ref: MDN - Promises</a>
+        </section>
+        <section data-background="#1B2B34">
+          <h3>fetch()</h3>
+          <p>fetch returnerar ett promise object</p>
+          <pre><code class="language-js">fetch('exampleURL.com/doNotUseThis')
+  .then(function(response) {
+    return response.json();            
+  })
+  .then(function(json){
+    console.log(json);
+  })</code></pre>
+          <p class="fragment fade-down"><em>"thenable"</em> om vi ska använda värdet måste vi plocka värdet från objektet och göra om det från JSON till JavaScript</p>
+        </section>
+        <section data-background="#1B2B34">
+        <p>Error handling hanteras med <em><code>.catch()</code></em></p>
+        <pre><code class="language-js">fetch('get.com')
+  .then(function(response) {
+    return response.json()
+  })
+  .then(function(actualData){
+    console.log(actualData);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });</code></pre>
+        <p class="fragment fade-down">Om <em>.then()</em> inte lyckas så går koden vidare till <em>.catch()</em></p>
+        </section>
+        <section>
+          <h3>Läs mer</h3>
+          <p><em style="padding: 1rem"><a style="color:#fff" href="https://www.tjvantoll.com/2015/09/13/fetch-and-errors/">https://www.tjvantoll.com/2015/09/13/fetch-and-errors/</a></em></p>
+        </section>
+      </section>
+      </section>
+      <section>
+        <p><em>Övningar finns på Github/Zenit</em></p>
+        <p><strong>07_async.md</strong></p>
+        <p>Använder sig av samma API som genomgången</p>
+      </section>
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '100%',
+      width: '80%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js', condition: function (){
+        return !document.body.classList;}
+      },
+      { src: 'plugin/notes/notes.js', async: true },
+      { src : 'lib/prismjs/prism.js'},
+      { src : 'js/print.js'}
+      ]
+    });
+  </script>
+</body>
+</html>
