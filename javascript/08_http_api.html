@@ -1,0 +1,284 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="Asynchronous JavaScript">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> HTTP & APIer </title>
+  <script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+<style type="text/css">
+  pre[class*="language-"]{
+    margin: 3rem auto;
+  }
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+      <!-- SLIDES START HERE -->
+      <section>
+        <section>
+          <h1><strong>HTTP & APIer</strong></h1>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h1><strong>HTTP</strong></h1>
+        </section>
+        <section>
+          <h3><em>HyperText Transfer Protocol</em></h3>
+          <p>En överföring sker på webben sker via HTTP-protokollet</p>
+          <p>Främst via <strong>GET</strong> för att hämta från en server</p>
+          <p class="fragment slide-down"><strong>POST</strong> för att skicka till en server</p>
+        </section>
+        <section>
+          <h3>HTTP</h3>
+          <p><strong>REQUEST</strong> - <em>RESPONSE</em></p>
+          <p><strong>CLIENT</strong> - <em>SERVER</em></p>
+        </section>
+        <section>
+          <h3>Primära metoder</h3>
+          <p><strong>GET</strong>: Hämta data</p>
+          <p><strong>POST</strong>: Skicka data</p>
+          <p><strong>PATCH</strong>: Uppdatera data</p>
+          <p><strong>PUT</strong>: Byta ut data</p>
+          <p><strong>DELETE</strong>: Ta bort data</p>
+        </section>
+        <section>
+          <h3><em>CRUD</em></h3>
+          <p>Metoderna brukar kallas för CRUD:</p>
+          <ul>
+            <li><strong>C</strong>reate</li>
+            <li><strong>R</strong>ead</li>
+            <li><strong>U</strong>pdate</li>
+            <li><strong>D</strong>elete</li>
+          </ul>
+        </section>
+        <section data-background="#1c2b34">
+          <h3>Typisk GET</h3>
+          <img src="https://s-media-cache-ak0.pinimg.com/originals/8c/d0/6a/8cd06a1e9863595ba76ee9932fc4a164.jpg" alt="Goat">
+        </section>
+        <section data-background="#1c2b34">
+          <h3>Typisk GET</h3>
+          <pre><code class="language-http">GET /index.html HTTP/1.1
+Host: fed17.github.io </code></pre>
+          </section>
+          <section data-background="#1c2b34">
+            <pre><code class="language-http">GET HTTP/1.1
+Host: https://fed17.github.io</code></pre>
+            <pre><code class="language-html">
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;FED17 homepage&lt;/title&gt;
+&lt;/head&gt;</code></pre>
+          <p>Det gick bra, här har du resursen (index.html)!</p>
+          </section>
+          <section data-background="#1c2b34">
+<pre><code class="language-http">GET HTTP/1.1
+Host: http://fed17.herokuapp.com/todos/1</code></pre>
+<pre><code class="language-json">{
+  "id": 1,
+  "text": "Buy Milk",
+  "complete": false
+}</code></pre>
+            <p>Det gick bra, här har du resursen (todos.json)!</p>
+            </section>
+        <section>
+          <h3>HTTP Headers</h3>
+          <p>Liknande som en html har en <strong>&lt;head&gt;</strong>-tagg samt en <strong>&lt;body&gt;</strong>-tagg</p>
+          <p>Har varje request <strong>HEADERS</strong> och <strong>BODY</strong></p>   
+        </section>
+        <section>
+          <h3>HEADERS</h3>
+          <p><em>meta data</em> om varje förfrågan</p>
+          <p>Berättar om vilket typ av innehåll som levereras, hur länge innehållet ska samt vilka som får komma åt innehållet</p>
+        </section>
+        </section>
+        <section>
+          <section>
+            <h1>API</h1>
+            <em>Application Programmable Interface</em>
+          </section>
+          <section data-background="#1c2b34">
+            <pre><code class="language-js">//Funktionen innehåller vår implementation
+function getAllListItems(){
+  return document.getElementsByTagName('li');
+}</code></pre>
+          </section>
+          <section data-background="#1c2b34">
+            <pre><code class="language-js">//När vi kallar på den
+//använder vi abstraktionen
+getAllListItems();</code></pre>
+            </section>
+            <section>
+              <h3>Abstraktion / Implementation</h3>
+              <p>Interfacet utåt, det vi döper våra funktioner till i princip</p>
+              <p class="fragment slide-down">Implementationen är själva koden som ligger i funktionen eller metoden. Den är undangömd.</p>
+              <p class="fragment slide-down">Vi behöver läsa ut vad abstraktionen gör och inte bry oss om implementationen.</p>
+            </section>
+            <section>
+              <h3><strong>Application Programmable Interface</strong></h3>
+              <p>Ett API är de funktioner/metoder som din applikation visar utåt publikt.</p>
+              <p class="fragment slide-down">Är de funktioner som vi interagerar med, vi behöver inte se koden bakom.</p>
+            </section>
+            <section>
+              <h3>Olika API:er</h3>
+              <p class="fragment slide-down">DOM API</p>
+              <p class="fragment slide-down">JavaScript API</p>
+            </section>
+            <section>
+              <h3>API i relation till webben</h3>
+              <p>Oftast pratar man om APIer som har endpoints där man hämtar data ifrån</p>
+              <p class="fragment slide-down">Servrar som exponerar URLer där man kan hämta enbart data ifrån och inte hemsidor.</p>
+              <p class="fragment slide-down">Oftat får man tillbaka informationen i form av <em>JSON</em></p>
+            </section>
+            <section>
+              <h3>Web API</h3>
+              <p>Skicka och hämta data via HTTP-protokollet med enkla medel</p>
+              <p>GET / POST / PATCH / DELETE</p>
+            </section>
+            <section>
+              <h3>ReST API</h3>
+              <p><em>Representational State Transfer</em></p>
+              <p>Servern bestämmer vad som kan skickas ut. Användaren behöver i princip bara gå till URLen för att hämta informationen.</p>
+              <p>Vi som användare behöver inte känna till strukturen av APIt, bara hur vi ska komma åt den.</p>
+            </section>
+            <section>
+              <h3>Öppna APIer</h3>
+              <p>Internt använder alla sidor sitt eget API för att manipulera data</p>
+              <p class="fragment slide-down">Vissa företag väljer att göra denna data publik och öppna sina endpoints för externa användare.</p>
+            </section>
+            <section>
+              <h3>Tre typer av öppna APIer</h3>
+              <ul>
+                <li class="fragment fade-down"><em>Superöppna</em>, vem som helst får göra vad som helst. (se fixer.io)</li>
+                <li class="fragment fade-down"><em>API-nyckel</em>, du får göra ganska mycket bara du identierar dig själv med en kod (se openweathermap)</li>
+                <li class="fragment fade-down"><em>Autentiseringsflöde med backend</em>, krävs ett specifikt inloggningsflöde (se spotify)</li>
+              </ul>
+            </section>
+            <section>
+              <h3>GET All users</h3>
+              <p>Alla moderna APIer har följande upplägg:</p>
+              <p class="fragment slide-down"><strong>GET</strong>: https://myapi.com/users</p>
+              <p class="fragment slide-down">Hämtar samtliga användare</p>
+              <p class="fragment slide-down">Det som returneras är nästan alltid <em>JSON</em></p>
+            </section>
+            <section>
+              <h3>Create a new user</h3>
+              <p><strong>POST</strong>: https://myapi.com/users</p>
+              <p>Samma url men metoden är annorlunda</p>
+              <p>Vi indikerar att vi ska skicka med information till servers med POST</p>
+            </section>
+            <section>
+              <h3>Enskilda resurser</h3>
+              <p><strong>GET https://myapi.com/users/12</strong></p>
+              <p>URLen indikerar: en användare</p>
+              <p>12 är i det här fallet ett unikt id för användaren</p>
+            </section>
+            <section>
+              <h3>Enskilda resurser</h3>
+              <p><strong>DELETE</strong> https://myapi.com/users/12</p>
+              <p>Samma URL men metoden är annorlunda</p>
+              <p>Användare nr 12 ska bort!</p>
+            </section>
+            <section>
+              <h3>Enskilda resurser</h3>
+              <p><strong>PATCH</strong> https://myapi.com/user/12</p>
+              <p>Samma URL men metoden är annorlunda</p>
+              <p>Användare nr 12 ska ändras!</p>
+            </section>
+            <section>
+              <h3>GET / POST / PATCH / DELETE</h3>
+              <p>Med <strong>POST</strong> och <strong>PATCH</strong> måste vi skicka med ny information</p>
+              <p>Med <strong>GET</strong> och <strong>DELETE</strong> behöver vi inte skicka med ny information eftersom vi inte ska modifiera</p>
+              <p class="fragment slide-down"><strong>GET</strong> är den enda "säkra" metoden</p>
+            </section>
+          </section>
+          <section>
+            <section>
+              <h1><strong>ReST API</strong></h1>
+            </section>
+          <section>
+          <blockquote>
+            REST-compliant Web services allow requesting systems to access and manipulate <em>textual representations</em> of <em>Web resources</em> using a uniform and predefined set of stateless operations.
+          </blockquote>
+          <a href="https://en.wikipedia.org/wiki/Representational_state_transfer" class="reference">Ref: Wiki - REST</a>
+        </section>
+        <section>
+          <p>Roy Fielding</p>
+          <p><em>"Architectural Styles and the Design of Network-based Software Architectures"</em></p>
+          <em><a style="color: white;"href="https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm">Dissertation @ UNIVERSITY OF CALIFORNIA</a></em>
+        </section>
+        <section>
+          <p><em>There are six guiding constraints that define a RESTful system</em></p>
+          <p>Web service APIs that adhere to the REST architectural constraints are called RESTful APIs</p>
+          <p>REST är varken en standard eller ett protokoll</p>
+          <a href="http://restfulapi.net/" class="reference">Ref: restfulapi.net</a>
+        </section>
+        <section>
+          <blockquote>
+            In simplest words, in the REST architectural style, data and functionality are considered resources and are accessed using Uniform Resource Identifiers (URIs). 
+          </blockquote>
+          <a href="http://restfulapi.net" class="reference">Ref: restfulapi.net</a>
+        </section>
+        <section>
+          <h3>Stateless</h3>
+          <blockquote>The client–server communication is constrained by no client context being stored on the server between requests.</blockquote>
+          <p class="fragment fade-down">Alla <em>requests</em> sker isolerade från varandra.</p>
+          <p class="fragment fade-down">Servern behöver inte ha någon information från dig: användaren.</p>
+        </section>
+        <section>
+          <h3>Representational</h3>
+          <p>En resurs kan identifieras med en <strong>URL</strong>. Resursen som användaren ser behöver dock inte vara av samma format som lagras på servern.</p>
+          <p class="fragment fade-down">På samma sätt som du hämtar informationen kan du även manipulera informationen och lagra ny information. All metadata för att göra detta har du redan.</p>
+        </section>
+        <section>
+          <blockquote>A REST API should be entered with no prior knowledge beyond the initial URI (bookmark) and set of standardized media types that are appropriate for the intended audience (i.e., expected to be understood by any client that might use the API).</blockquote>
+          <a href="http://restfulapi.net" class="reference">Ref: restfulapi.net</a>
+
+        </section>
+          </section>
+
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '100%',
+      width: '80%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js', condition: function (){
+        return !document.body.classList;}
+      },
+      { src: 'plugin/notes/notes.js', async: true },
+      { src : 'lib/prismjs/prism.js'},
+      { src : 'js/print.js'}
+      ]
+    });
+  </script>
+</body>
+</html>
