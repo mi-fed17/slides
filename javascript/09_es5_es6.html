@@ -1,0 +1,254 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="ES5 vs. ES6">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> ES5 vs. ES6 </title>
+  <script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+<style type="text/css">
+  pre[class*="language-"]{
+    margin: 3rem auto;
+  }
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <section>
+          <h1><strong>ES5 kontra ES6</strong></h1>
+        </section>
+      </section>
+      <section>
+        <section>
+          <p><strong>Arrow Function (fat arrow)</strong></p>
+          <p>I alla anonyma funktioner kan nyckelordet <code><em>function</em></code></p> ersättas med en pil på höger sida av paranteserna</p>
+          <pre><code class="language-js">const myFunc = function(){}</code></pre>
+          <pre><code class="language-js">const myFunc = () => {}</code></pre>
+        </section>
+        <section>
+          <p>Vidare har arrow function en implicit return, betyder att vi kan skippa att skriva ut <code><em>return</em></code> också om vi direkt returnerar något</p>
+          <pre><code class="language-js">const add = function(a,b){
+  return a + b;
+}</code></pre>
+          <pre class="fragment fade-down"><code class="language-js">const add = (a,b) => a + b;</code></pre>
+        </section>
+        <section data-background="#1c2b34">
+          <h3>Template Literals</h3>
+          <img class="fragment fade-down" style="position: absolute; top: 0; right: -50; height: 200px; width: auto;" src="http://moore.se/frame/uploads/2012/12/santa-1024x768.jpg" alt="Tomten grav accent">
+          <img class="fragment fade-down" style="position: absolute; top: 0; left: -50; height: 200px; width: auto;" src="https://imganuncios.mitula.net/tomt_kolvik_2050134473883791738.jpg" alt="Tomten akut accent">
+          <p><em>Shift + ´</em>: Grav accent</p>
+          <pre class="fragment fade-down"><code class="language-js">var a = 5;
+var b = 10;</code></pre>
+<pre class="fragment fade-down"><code class="language-js">console.log(`${a} + ${b} equals ${ a + b }`);
+//5 + 10 equals 15</code></pre>
+        <pre class="fragment fade-down"><code class="language-js">var name = "Gnurufr";
+console.log(`I AM ${name.toUpperCase()}!!!!`);</code></pre>
+        </section>
+        <section data-background="#1c2b34">
+          <h3>Template literals</h3>
+          <p>Vi slipper oroa oss för att behöva escapea</p>
+          <pre><code class="language-js">var text = " \"double quotes\"";</code></pre>
+          <pre class="fragment fade-down"><code class="language-js">var text = `"double quotes"`;</code></pre>
+          <pre class="fragment fade-down"><code class="language-js">var text = 'I'm a noob';</code></pre>
+          <pre class="fragment fade-down"><code class="language-js">var text = `I'm a noob`;</code></pre>
+        </section>
+        <section data-background="#1c2b34">
+          <h3>Template literals</h3>
+          <pre><code class="language-js">const name = "Jesper";
+const html = `
+  &lt;ul&gt;
+    &lt;li&gt;Wowo this is great ${name}&lt;/li&gt;
+    &lt;li&gt;Awesome&lt;/li&gt;
+  &lt;/ul&gt;`; </code></pre>
+        </section>
+        <section>
+          <h1><em>Destructuring</em></h1>
+          <a href="http://exploringjs.com/es6/ch_destructuring.html" class="reference">Ref: ExploringJS - Destructing</a>
+        </section>
+        <section data-background="#1c2b34">
+          <pre><code class="language-js">var obj = {
+  x: 100,
+  y: 100
+};</code></pre>
+          <pre class="fragment fade-down"><code class="language-js">var x = obj.x;
+var y = obj.y;</code></pre>
+        </section>
+        <section data-background="#1c2b34">
+          <h3>ES6 Destructuring</h3>
+          <pre><code class="language-js">var obj = {
+  x: 100,
+  y: 100
+}</code></pre>
+          <pre><code class="language-js">var { x , y } = obj;</code></pre>
+        </section>
+        <section>
+          <h3>Destructuring</h3>
+          <p>När du vill plocka ut egenskaper eller värden från ett objekt eller array</p>
+          <p class="fragment fade-down">Tänk på att det är viktigt med positionen i arrayen:</p>
+          <pre><code class="language-js">//Jumping over values
+var [x,,,,y] = array;</code></pre>
+          <a href="http://exploringjs.com/es6/ch_destructuring.html" class="reference">Ref: ExploringJS - Destructuring</a>
+        </section>
+        <section>
+          <h4>Spread</h4>
+          <blockquote>
+            The spread syntax allows an expression to be expanded in places where multiple arguments/elements or variables are expected.
+          </blockquote>
+          <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator" class="reference">Ref: MDN - Spread Operator</a>
+        </section>
+        <section>
+          <h3>Rest operator</h3>
+          <p>Ser exakt ut som spread operator</p>
+          <p>Skillnaden är bara hur <em>...</em> används</p>
+          <p class="fragment fade-down">"Gör detta med resten av argumenten"</p>
+          <pre class="fragment fade-down"><code class="language-js">function restFunction(a, b, ...rest){
+  console.log(a,b, rest);
+}</code></pre>
+          <a href="http://exploringjs.com/es6/ch_parameter-handling.html#sec_rest-parameters" class="reference">Ref: ExploringJS - Rest parameters</a>
+        </section>
+        <section>
+          <h3>Spread/rest</h3>
+          <blockquote>
+            The spread operator (...) looks exactly like the rest operator, but is used inside function calls and Array literals (not inside destructuring patterns).
+          </blockquote>
+          <a href="http://exploringjs.com/es6/ch_parameter-handling.html#sec_spread-operator">Ref: ExploringJS - Spread</a>
+        </section>
+        <section>
+          <p>I JavaScript kan vi skicka med fler eller färre argument än parametrar.</p>
+          <p class="fragment fade-down">De överiga argumenten kommer bara att struntas i. </p>
+          <pre><code class="language-js">function add(a,b,c){
+  add a + b + c;
+}
+add(5,5); //Will work</code></pre>
+        </section>
+        <section data-background="#1c2b34">
+          <h3>Default parameters</h3>
+          <p>ES6 gör det även möjligt att skicka med default värden</p>
+          <pre><code class="language-js">function add(x = 0, y = 2){
+  return x + y;
+}</code></pre>
+        <pre class="fragment fade-down"><code class="language-js">add() //2</code></pre>
+        <pre class="fragment fade-down"><code class="language-js">add(2) //4</code></pre>
+        <pre class="fragment fade-down"><code class="language-js">add(2,8) // 10</code></pre>
+        </section>
+      </section>
+        <section>
+          <section>
+            <h1><strong>Livet innan fetch</strong></h1>
+          </section>
+          <section>
+            <p>Två huvudsakliga val</p>
+            <ul>
+              <li><code><em>XMLHttpRequest</em></code></li>
+              <li>jQuerys <code><em>$.ajax()</code></em></li>
+            </ul>
+          </section>
+          <section>
+            <p>Standard XMLHttpRequest</p>
+            <pre><code class="language-js">var request = new XMLHttpRequest();
+request.onreadystatechange = function() {
+  if (request.readyState === 4) {
+    var data = JSON.parse(request.responseText);
+    console.log(data);
+  }
+};
+
+request.open('GET', 'https://fed17.herokuapp.com/todos');
+request.send();</code></pre>
+          </section>
+          <section>
+            <p>Grundutförandet av <code><em>$.ajax()</em></code></p>
+            <pre><code class="language-js">$.ajax({
+  method: 'GET',
+  url: 'http://fed17.herokuapp.com/todos',
+  success: (response) => {
+    console.log(response);
+  },
+  error: (error) => {
+    console.log(error);
+  }
+})</code></pre>
+        <a href="http://api.jquery.com/jquery.ajax/" class="reference">Ref: jQuery API: $.ajax()</a>
+        </section>
+        <section>
+          <p>Finns även alternativ syntax</p>
+          <pre><code class="language-js"><pre><code class="language-js">$.ajax({
+  method: 'GET',
+  url: 'http://fed17.herokuapp.com/todos'
+})
+.done((response) => {
+  console.log(response);
+})
+.fail((error) =>{
+  console.log(error);
+})</code></pre></code></pre>
+        </section>
+        <section>
+          <p>Samt shorthands</p>
+          <pre><code class="language-js">$.get(''http://fed17.herokuapp.com/todos'')
+  .done((response) => {
+    console.log(response);
+  })
+  .fail((error) => {
+    console.log(error);
+  })</code></pre>
+        <a class="reference" href="https://api.jquery.com/jquery.get/">https://api.jquery.com/jquery.get/</a>
+        </section>
+        <section>
+          <img src="https://i.imgur.com/l0sQ2cV.png" alt="fetch">
+        </section>
+        <section>
+          <img src="https://i.imgur.com/i2iT9MI.png" alt="XMLHttpRequest">
+        </section>
+      </section>
+      <section>
+        <h3><em>Eftermiddagen</em></h3>
+        <em>09_weatherapp_es5.md</em>
+        <p>Gör om väderappen så att den använder antingen XMLHttpRequest eller $.ajax() från jQuery och få den att fungera som tidigare</p>
+        <p>Gör om måndagens övningar med XMLHttpRequest samt $.ajax()</p>
+
+        <p><strong>Börja leta efter ett API som du skulle vilja använda till inlämningsuppgiften</strong></p>
+      </section>
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '100%',
+      width: '80%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js', condition: function (){
+        return !document.body.classList;}
+      },
+      { src: 'plugin/notes/notes.js', async: true },
+      { src : 'lib/prismjs/prism.js'},
+      { src : 'js/print.js'}
+      ]
+    });
+  </script>
+</body>
+</html>
