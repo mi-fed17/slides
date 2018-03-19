@@ -1,0 +1,183 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="Design Patterns">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> Design Patterns </title>
+  <script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+<style type="text/css">
+  pre[class*="language-"]{
+    margin: 3rem auto;
+  }
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <section>
+          <h1><strong>Design Patterns</strong></h1>
+        </section>
+        <section>
+          <blockquote>...a software design pattern is a general, reusable solution to a commonly occurring problem within a given context in software design.</blockquote>
+          <a class="reference" href="https://en.wikipedia.org/wiki/Software_design_pattern">https://en.wikipedia.org/wiki/Software_design_pattern</a>
+        </section>
+        <section>
+          <p>Jag kommer att behandla ett antal <strong>mönster</strong></p>
+          <p>samt ett antal <em>principer</em></p>
+          <p>Området är enormt, jag kommer bara ta upp de mest viktiga delarna som rör JavaScript</p>
+        </section>
+        <section>
+          <pre><code class="language-js">const list = document.getElementById('list');
+for(let singleItem of listOfThings){
+  let listItem = document.createElement('li');
+  listItem.innerText = singleItem;
+  list.appendChild(listItem);
+}</code></pre>
+        </section>
+        <section>
+          <pre><code class="language-js">function displayList(listOfThings){
+  const list = document.getElementById('list');
+    for(let singleItem of listOfThings){
+      let listItem = document.createElement('li');
+      listItem.innerText = singleItem;
+      list.appendChild(listItem);
+    }
+}</code></pre>
+        </section>
+        <section>
+          <p><strong>Model-View-* (MV*)</strong></p>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/MVC-Process.svg">
+        </section>
+        <section>
+          <p>Objekt literals kan användas</p>
+          <pre><code class="language-js">const View = {}
+const Model = {}</code></pre>
+          <p>Controllern behöver inte användas i vårat fall. MVC behöver inte följas strikt.</p>
+        </section>
+        <section>
+          <pre><code class="language-js">const view = {
+  displayList(listOfThings){
+    const list = document.getElementById('list');
+    for(let singleItem of listOfThings){
+      let listItem = document.createElement('li');
+      listItem.innerText = singleItem;
+      list.appendChild(listItem);
+    }
+  }
+}</code></pre>
+        </section>
+        <section>
+          <p>Separation of Concerns</p>
+          <blockquote>Concerns are the different aspects of software functionality. For instance, the "business logic" of software is a concern, and the interface through which a person uses this logic is another.</blockquote>
+        </section>
+        <section>
+          <p>Den här koden är för busy, gör för mycket</p>
+          <pre><code class="language-js">const list = document.getElementById('list');
+for(let singleItem of listOfThings){
+  if(singleItem === "Quokka"){
+    let listItem = document.createElement('li');
+    listItem.innerText = singleItem;
+    list.appendChild(listItem);
+  }
+}</code></pre>
+        </section>
+        <section>
+          <pre><code class="language-js">const listOfThings = [];
+const filteredList = ["Quokka", "Not Quokka", "Elephant"];
+const list = document.getElementById('list');
+
+for(let item of listOfThings){
+  if(item === "Quokka"){
+    filteredList.push(item);
+  }
+}
+
+for(let singleItem of filteredList){
+    let listItem = document.createElement('li');
+    listItem.innerText = singleItem;
+    list.appendChild(listItem);
+}</code></pre>
+        </section>
+        <section>
+          <p><strong>Principle of Least Privilege</strong></p>
+          <blockquote> requires that in a particular abstraction layer of a computing environment, every module (such as a process, a user, or a program, depending on the subject) must be able to access only the information and resources that are necessary for its legitimate purpose</blockquote>
+        </section>
+        <section>
+          <p>En stor anledning till att vi använder funktioner och objekt</p>
+          <p><em>Inkapsling och begränsa tillgång</em></p>
+          <p>Har inte koden användning av en vissa variabel ska den inte ens veta att den finns.</p>
+        </section>
+        <section>
+          <p>Dessa två namn kan inte råka komma åt varandra, eller råka skriva över varandra. De känner inte ens till varandra.</p>
+          <pre><code class="language-js">function printName(){
+  let name = "Jesper";
+  console.log(name);
+}
+
+function printName2(){
+  let name = "Agneta";
+  console.log(name);
+}</code></pre>
+        </section>
+        <section>
+          <p>Här har vi en global variabel som skrivs över i var och en av dessa funktioner. Det kräver mer av oss att hålla koll på vilka variabler som är säkra och vilka variabler som faktiskt används. Vi kan också råka skriva över värden.</p>
+          <pre><code class="language-js">let name = "Globala Göran";
+function printName(){
+  let name = "Jesper";
+  console.log(name);
+}
+
+function printName2(){
+  let name = "Agneta";
+  console.log(name);
+}</code></pre>
+        </section>
+        <section>
+          <p><em>Eftermiddagen</em></p>
+          <p>Individuell presentation av inlämning</p>
+          <p>Resterande jobbar med övning: <em>11_separation_of_concerns.md</em></p>
+        </section>
+      </section>
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '100%',
+      width: '80%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js', condition: function (){
+        return !document.body.classList;}
+      },
+      { src: 'plugin/notes/notes.js', async: true },
+      { src : 'lib/prismjs/prism.js'},
+      { src : 'js/print.js'}
+      ]
+    });
+  </script>
+</body>
+</html>
