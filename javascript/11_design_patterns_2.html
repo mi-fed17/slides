@@ -1,0 +1,142 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="Design Patterns 2">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> Design Patterns 2 </title>
+  <script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+<style type="text/css">
+  pre[class*="language-"]{
+    margin: 3rem auto;
+  }
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <section>
+          <h1><strong>Design Patterns</strong></h1>
+        </section>
+        <section>
+          <blockquote>...a software design pattern is a general, reusable solution to a commonly occurring problem within a given context in software design.</blockquote>
+          <a class="reference" href="https://en.wikipedia.org/wiki/Software_design_pattern">https://en.wikipedia.org/wiki/Software_design_pattern</a>
+        </section>
+        <section>
+          <p><em>Problem:</em> Jag repeterar min kod ofta</p>
+          <p><strong>Lösning: </strong> försök göra en funktion av den repetitiva koden och ändra de värden som behöver ändras med argument och parametrar som skickas med till funktionen.</p>
+        </section>
+        <section>
+          <p><em>Problem</em>: Jag behöver gruppera en samling kod som hör ihop</p>
+          <p><strong>Lösning:</strong> använd en funktion för att namnge och gruppera denna kod </p>
+        </section>
+        <section>
+          <p><em>Problem</em>: Jag har svinmånga funktioner nu och jag behöver gruppera dessa funktioner</p>
+          <p><strong>Lösning</strong>: använd ett objekt för att gruppera funktioner som hör samma. Minskar också risken för att du definierar samma funktionsnamn två gånger av misstag.</p>
+        </section>
+        <section>
+          <p><strong>modul</strong> <span style="font-style: italic;">[modu´l] substantiv ~en ~er </span></p>
+          <blockquote>enhetsmått; kombinerbar och ut­bytbar del el. komponent</blockquote>
+        </section>
+        <section>
+          <p><strong>Model-View-* (MV*)</strong></p>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/MVC-Process.svg">
+        </section>
+        <section>
+          <p><em>Module Pattern</em>: implementeras i JavaScript mha ett objekt</p>
+          <pre><code class="language-js">const ModuleName = {
+  moduleFunction: function(){
+    console.log('I am a function inside of an object, nothing more.');
+  }
+}
+
+ModuleName.moduleFunction(); //I am a function inside of an object, nothing more.</code></pre>
+        <p>Visar tillhörighet och gör det enklare att veta var koden ligger och var koden ligger ifrån.</p>
+        </section>
+        <section>
+          <p>Tänk på jQuery t.ex.</p>
+          <pre><code class="language-js">$.animate();
+$.css();</code></pre>
+          <p>Vi vet att <code><em>.animate()</em></code> tillhör biblioteket jQuery för att det har "namnet" <code><strong>$</strong></code></p>
+          <p>Vi kan utan problem skapa en egen funktion som också heter <code><em>animate()</em></code> utan att den krockar med jQuerys funktion.</p>
+        </section>
+          <section>
+            <p>Ett mer äkta <em>Module Pattern</em></p>
+            <pre><code class="language-js">const ModuleName = (function(){
+  return {
+    moduleFunction: function(){
+      console.log('I am a function inside of an object, nothing more.');
+    }
+  }
+})();
+
+ModuleName.moduleFunction();</code></pre>
+          </section>
+        <section>
+          <p><em>Immediately Invoked Function Expression (IIFE)</em></p>
+          <p>Module Pattern använder sig av en IIFE för att direkt returnera ett objekt, resultatet blir NÄSTAN detsamma som förut.</p>
+          <p class="fragment fade-down">En IIFE är en <strong>anonym funktion som kallar på sig själv</strong> 🙃🤔🙇‍♀️🙇‍</p>
+          <pre class="fragment fade-down"><code class="language-js">(function(){
+  console.log("Hello darkness my old friend")
+}();</code></pre>
+        </section>
+        <section>
+          <video autoplay loop src="https://i.imgur.com/MDKjiw2.mp4"></video>
+        </section>
+        <section>
+          <ul>
+            <li>Gruppera kod</li>
+            <li>Göra funktioner och variabler <strong>"privata"</strong></li>
+            <li>Privata variabler och funktioner kan inte kommas åt hur som helst, vi måste göra de tillgängliga för kod som ligger utanför modulen.</li>
+          </ul>
+        </section>
+        <section data-background-image="https://i.imgur.com/ZbKIhdt.jpg" data-background-size="contain">
+        </section>
+        <section>
+          <p><em>Eftermiddag</em></p>
+          <p>Finns övning: <strong>12_module_pattern.md</strong></p>
+          <p>Handlar om att bygga en miniräknare med Module Pattern och enligt Model-View mönstret</p>
+        </section>
+      </section>
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '100%',
+      width: '80%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js', condition: function (){
+        return !document.body.classList;}
+      },
+      { src: 'plugin/notes/notes.js', async: true },
+      { src : 'lib/prismjs/prism.js'},
+      { src : 'js/print.js'}
+      ]
+    });
+  </script>
+</body>
+</html>
