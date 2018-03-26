@@ -1,0 +1,183 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="Object creation">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> Object Creation </title>
+  <script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+<style type="text/css">
+  pre[class*="language-"]{
+    margin: 3rem auto;
+  }
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <section>
+          <h1><strong>Object creation</strong></h1>
+        </section>
+        <section>
+            <p><em>Module Pattern</em> - används för namespacing</p>
+            <pre><code class="language-js">const ModuleName = (function(){
+  return {
+    moduleFunction: function(){
+      console.log('I am a function inside of an object, nothing more.');
+    }
+  }
+})();
+
+ModuleName.moduleFunction();</code></pre>
+          
+        </section>
+        <section>
+            <blockquote>Namespacing any serious script or application is critical as it's important to <em>safeguard our code from breaking</em> in the event of another script on the page using the same variable or method names we are. </blockquote>
+            <a href="https://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailnamespacing" class="reference">Ref: Namespacing Patterns</a>
+          </section>
+          <section>
+            <p>Lagrar variabler i en closure så att de blir "privata"</p>
+            <pre><code class="language-js">const DwarvesModel = (function(){
+  let dwarves = ['Toker', 'Blyger','Trötter', 'Prosit','Kloker', 'Butter','Glader'];
+
+  return {
+    getDwarves: function(){
+      return dwarves;
+    },
+    clearDwarves: function(){
+      dwarves = [];
+    }
+  }
+})();</code></pre>
+          </section>
+          <section>
+            <h1><strong>Skapa objekt</strong></h1>
+          </section>
+          <section>
+            <p>Skapa en <em>Objekt Literal</em></p>
+            <pre><code class="language-js">const anObject = {}</code></pre>
+            <p class="fragment fade-down">Ett "vanligt" objekt som sparas i variablen <em><strong>anObject</strong></em></p>
+            <p class="fragment fade-down">Duger bra i många scenarion</p>
+          </section> 
+          <section>
+            <p><em>Constructor Call</em></p>
+            <pre><code class="language-js">function Taco(topping, bread){
+  this.topping = topping;
+  this.bread = bread;
+}</code></pre>
+          <pre><code class="language-js">let aNiceTaco = new Taco(["Meat"], "Tortilla");</code></pre>
+          <p class="fragment fade-down">Vi skapar ett objekt av en viss typ, i detta fall: <code><em>Taco</em></code></p>
+          <p class="fragment fade-down">Stor bokstav på funktionsnamnet gör ingenting, det är fortfarande en vanlig funktion</p>
+          </section>
+          <section>
+            <pre><code class="language-js">function Taco(topping, bread){
+  this.topping = topping;
+  this.bread = bread;
+  this.addTopping = function(newTopping){
+    this.topping.push(newTopping);
+  }
+}</code></pre>
+        <p class="fragment fade-down"><code><em>this</em></code>pekar på varje enskilt nytt objekt av typen taco</p>
+        <p class="fragment fade-down">Vi kan lägga till funktioner som manipulerar olika tacos</p>
+        </section>
+        <section>
+          <p><em>Constructor Call Pattern</em></p>
+          <p>Du vill ha viss logik kopplat till ett visst objekt</p>
+          <p>Du vill att ett objekt ska vara av en viss typ och ärva speciella egenskaper</p>
+          <p>Du skriver funktionerna för ett objekt en gång och sedan ärvs dessa funktioner till varje nytt objekt.</p>
+        </section>
+        <section>
+          <p>Objekt är alltid länkade till ett annat objekt</p>
+          <p class="fragment fade-down">Det sista i kedjan är <code><em>Object</em></code></p>
+          <p class="fragment fade-down">Samma som med scope så kommer JavaScript söka sig uppför denna kedja för att hitta det den söker</p>
+        </section>
+        <section>
+          <img src="https://github.com/getify/You-Dont-Know-JS/raw/master/scope%20%26%20closures/fig1.png" alt="Scope">
+        </section>
+        <section>
+          <p>Skapa en kopia av ett objekt</p>
+          <p><code><em>Object.assign()</em></code></p>
+          <pre><code class="language-js">let person1 = {
+  name: "Jorge"
+}
+let person2 = Object.assign({}, person1);</code></pre>
+          <p class="fragment fade-down">Bästa sättet att kopiera ett objekt rakt av</p>
+        </section>
+        <section>
+          <p>Skapa ett nytt objekt <em>baserat</em> på ett annat</p>
+          <p><code><em>Object.create()</em></code></p>
+          <pre><code class="language-js">let person1 = {
+  name: "Jorge"
+}
+
+let person2 = Object.create(person1);</code></pre>
+        </section>
+        <section>
+          <p>Det som gör att allting är länkat till varandra kallas <em>Prototypkedjan</em></p>
+          <p class="fragment fade-down">Varje objekt har en egenskap som heter prototyp och som ärvs mellan objekt.</p>
+          <p class="fragment fade-down"><em>Prototypkedjan</em> är grunden för hur allt i JavaScript fungerar</p>
+        </section>
+        <section>
+          <pre><code class="language-js">function Taco(topping, bread){
+  this.topping = topping;
+  this.bread = bread;
+  this.addTopping = function(newTopping){
+    this.topping.push(newTopping);
+  }
+}</code></pre>
+        <pre><code class="language-js">function Taco(topping, bread){
+  this.topping = topping;
+  this.bread = bread;
+}
+
+Taco.prototype.addTopping = function(newTopping){
+  this.topping.push(newTopping);
+}</code></pre>
+        </section>
+        <section>
+          <p>Övningar finns på <em>Zenit/GitHub</em></p>
+          <p>Prototyper och objekt är grunden för allt inom JavaScript</p>
+        </section>
+      </section>
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '100%',
+      width: '80%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js', condition: function (){
+        return !document.body.classList;}
+      },
+      { src: 'plugin/notes/notes.js', async: true },
+      { src : 'lib/prismjs/prism.js'},
+      { src : 'js/print.js'}
+      ]
+    });
+  </script>
+</body>
+</html>
