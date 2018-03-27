@@ -1,0 +1,170 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="ES6 Classes">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> ES6 Classes </title>
+  <script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+<style type="text/css">
+  pre[class*="language-"]{
+    margin: 3rem auto;
+  }
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <section>
+          <h1><strong>ES6 Classes</strong></h1>
+          <p>Objektorienterad JavaScript</p>
+        </section>
+      </section>
+      <section>
+        <section>
+          <p>Allt kretsar kring</p>
+          <h1 class="fragment fade-down"><strong>this</strong></h1>
+          <p class="fragment fade-down">Experimentera med this och lär dig det så kommer mycket bli enklare</p>
+        </section>
+        <section>
+          <p><em><code>this</code></em> syftar på <strong>context</strong></p>
+          <p>Enklare sagt, vilket objekt funktionen kallas på eller tillhör</p>
+          <p class="fragment fade-down">En funktion kan ha samma funktionalitet men bete sig olika beroende på hur du kallar på den och när du kallar på den: <code><em>this ändras</em></code></p>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h1>Class keyword</h1>
+        </section>
+        <section data-background="#1c2b34">
+          <pre><code class="language-js">//class keyword
+class Person{
+  //explicit constructor method
+  constructor(name, age){
+    this.name = name;
+    this.age = age;
+  }
+}</code></pre>
+        <pre class="fragment fade-down"><code class="language-js">
+function Person(name, age){
+  this.name = name;
+  this.age = age;
+}</code></pre>
+        </section>
+        <section>
+          <p><strong>class</strong></p>
+          <p>Gör samma sak som Constructor Call</p>
+          <p>Måste alltid skrivas med nyckelordet <strong><code>class</code></strong></p>
+          <p class="fragment fade-down">Måste alltid skapas med <strong><code>new</code></strong></p>
+          <pre class="fragment fade-down"><code class="language-js">var newPerson = new Person("Ronny", 52);</code></pre>
+        </section>
+        <section data-background="#1c2b34">
+          <p>class methods</p>
+          <pre><code style="min-height: 500px;" class="language-js">class Person{
+  constructor(name, age){
+    this.name = name;
+    this.age = age;
+  }
+  printName(){
+    console.log(this.name);
+  }
+}</code></pre>
+        </section>
+        <section data-background="#1c2b34">
+          <h3>get & set</h3>
+          <pre class="fragment fade-down"><code style="min-height: 500px;" class="language-js">class Person{
+  constructor(name, age){
+    this.name = name;
+    this.age = age;
+  }
+  get name(){
+    return this.name;
+  }
+  set name(newName){
+    this.name = newName;
+  }
+}</code></pre>
+        </section>
+        <section data-background="#1c2b34">
+          <pre><code class="language-js">class Person{
+  set name(newName){
+    if(newName !== ''){
+      this.name = newName;
+    }
+    return 'You must supply a name!';
+  }
+}</code></pre>
+        </section>
+        <section>
+          <h3>ES6 Classes</h3>
+          <p>Tillför inget nytt egentligen</p>
+          <p><em>"Syntactical sugar"</p></em></p>
+          <p class="fragment fade-down">Ärver med <strong>extends</strong></p>
+          <p class="fragment fade-down">Den klassen man ärver ifrån kan kallas på med <strong>super</strong></p>
+        </section>
+        <section>
+          <p>Arv</p>
+          <pre><code class="language-js">class Person {
+  constructor(name) {
+    this.name = name;
+  }
+  toString() {
+      return `${this.name}`;
+  }
+}
+
+class Teacher extends Person {
+    constructor(name, title) {
+        super(name);
+        this.title = "Teacher";
+    }
+}
+</code></pre>
+        </section>
+        <section>
+          <p>Övningar finns på <em>Zenit/GitHub</em></p>
+          <p>Eget arbete med gruppuppgiften</p>
+        </section>
+      </section>
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '100%',
+      width: '80%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js', condition: function (){
+        return !document.body.classList;}
+      },
+      { src: 'plugin/notes/notes.js', async: true },
+      { src : 'lib/prismjs/prism.js'},
+      { src : 'js/print.js'}
+      ]
+    });
+  </script>
+</body>
+</html>
