@@ -1,0 +1,178 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="Programming Paradigms">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> Programming Paradigms </title>
+  <script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+<style type="text/css">
+  pre[class*="language-"]{
+    margin: 3rem auto;
+  }
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+      <section>
+        <h1><strong>Programming Paradigms</strong></h1>
+      </section>
+      <section>
+        <blockquote>Programming paradigms are a way to classify programming languages based on their features. Languages can be classified into multiple paradigms.</blockquote>
+        <a class="reference" href="https://en.wikipedia.org/wiki/Programming_paradigm">Source: Wikipedia</a>
+      </section>
+      <section>
+        <p><em>State</em> eller <em>stateful</em></p>
+        <blockquote>In information technology and computer science, a program is described as stateful if it is designed to remember preceding events or user interactions; the remembered information is called the state of the system.</blockquote>
+        <a class="reference" href="https://en.wikipedia.org/wiki/State_(computer_science)">Source: Wikipedia</a>
+      </section>
+      <section>
+        <p>Vi måste nästan alltid veta vad vårt föregående state är: <em>har knappen blivit tryckt på eller inte?</em></p>
+        <p>Olika programmeringsparadigm sköter detta på olika sätt</p>
+        <p>JavaScript är multi-paradigm: Objektorienterat/imperativt/deklarativt/funktionellt</p>
+      </section>
+      <section>
+        <p>De vi använt mest</p>
+          <ul>
+            <li><strong>Proceduell</strong>: gruppering i funktioner, mer steg för steg</li>
+            <li><strong>Objektorienterad</strong>: gruppering i klasser och objekt, oftast grupperas tillståndet (state) tillsammans med funktionerna som hör till detta state.</li>
+          </ul>
+          <p class="fragment fade-down">Båda dessa tillåter sideffekter och baseras ofta på att man kallar på funktionerna i en viss ordning</p>
+      </section>
+      <section>
+        <p><em>Funktionell programmering</em></p>
+        <ul>
+          <li>Rena funktioner (pure functions)</li>
+          <li>Undvik delat tillstånd (shared state)</li>
+          <li>Undvik sidoeffekter</li>
+        </ul>
+        <p>Funktionell är som en undergrupp av deklarativ programmering</p>
+        <a class="reference" href="https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0">https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0</a>
+      </section>
+      <section>
+        <p>Pure functions</p>
+        <ul>
+          <li>Given the same inputs, always returns the same output, and</li>
+          <li>Has no side effects</li>
+        </ul>
+        <p class="fragment fade-down">Vissa funktioner förlitar sig på att annan information utanför funktionens scope ska vara tillgänglig, det gör inte en ren funktion. En ren funktion ändrar inte heller någonting utanför det egna scopet.</p>
+      </section>
+      <section>
+        <p>Exempel på funktioner som i sin grund är funktionella</p>
+        <ul>
+          <li><code><em>map</em></code> - går igenom och gör något med varje värde i en array</li>
+          <li><code><em>filter</em></code> - filtererar en array</li>
+          <li><code><em>reduce</em></code> - reducerar en array (summera oftast)</li>
+        </ul>
+        <p class="fragment fade-down">Alla är exempel på såkallade <code><strong>Higher Order Functions</strong></code>, dessa funktioner returnerar alltid en ny array och manipulerar inte den gamla arrayen</p>
+      </section>
+      <section>
+        <blockquote>En <strong>Higher Order Function</strong> är en funktion som tar en annan funktion som ett argument</blockquote>
+        <p>Funktionen som skickas in som argument bestämmer vad den kallade funktionen ska göra.</p>
+      </section>
+      <section data-background="#1c2b34">
+        <p>Imperativt dubbla varje nummer i en array</p>
+        <pre><code class="language-js">const numbers = [5,6,7];
+const doubleNumbers = [];
+for(let i = 0; i < numbers.length; i++){
+  doubleNumbers[i] = numbers[i] * 2;
+}</code></pre>
+        <p class="fragment fade-down">Deklarativt dubbla varje nummer i en array</p>
+        <pre class="fragment fade-down"><code class="language-js">const numbers = [5,6,7];
+const doubleNumbers = numbers.map((number) => number * 2);</code></pre>
+      </section>
+      <section data-background="#1c2b34">
+          <p>Imperativt ta bort ett värde</p>
+          <pre><code class="language-js">const numbers = [5,6,7];
+const filteredNumbers = [];
+for(let i = 0; i < numbers.length; i++){
+  if(numbers[i] !== 6){
+    filteredNumbers.push(numbers[i]);
+  }
+}</code></pre>
+      <p class="fragment fade-down">Deklarativt ta bort ett värde</p>
+      <pre class="fragment fade-down"><code class="language-js">const numbers = [5,6,7];
+const filteredNumbers = numbers.filter((numbers) => number !== 6);
+</code></pre>
+      </section>
+      <section data-background="#1c2b34">
+        <p>Imperativt summera alla värden i en array</p>
+        <pre><code class="language-js">const numbers = [5,6,7];
+const sum = 0;
+for(let i = 0; i < numbers.length; i++){
+  sum = sum + numbers[i];
+}</code></pre>
+      <p class="fragment fade-down">Deklarativt summera alla värden</p>
+      <pre class="fragment fade-down"><code class="language-js">const numbers = [5,6,7];
+const sum = numbers.reduce((total, nextValue) => total + nextValue, 0);</code></pre>
+      </section>
+      <section>
+        <pre><code class="language-js">const mapped = thing.map(function(currentValue, index, array){
+  return currentValue;
+})</code></pre>
+        <p class="fragment fade-down">filter och map har hela tiden koll på vilket värde de använder för stunden samt vilket index</p>
+        <pre class="fragment fade-down"><code class="language-js">const reduced = thing.reduce(function(accumulator, currentValue, index , array){
+  return currentValue;
+})</code></pre>
+      <p class="fragment fade-down">reduce har koll på värdet, index samt den nuvarande summerade värdet.</p>
+      </section>
+      <section>
+        <pre class="fragment fade-down"><code class="language-js">const numbers = [5,6,7];
+const filteredNumbers = numbers.filter((numbers) => number !== 6);
+</code></pre>
+        <pre class="fragment fade-down"><code class="language-js">const numbers = [5,6,7];
+const filteredNumbers = numbers.filter(function(number){
+  return number !== 6;
+});
+</code></pre>
+      <p class="fragment fade-down">return blir if-statement, det nuvarande värdet returneras och lagras om if-statement stämmer.</p>
+      </section>
+      <section>
+        <p class="fragment fade-down">Eftersom JavaScript är ett multiparadigm-språk så behöver vi och kan inte strikt förhålla sig till ett paradigm. Vi kan använda oss av den funktionalitet som passar bäst för scenariot vi har.</p>
+        <p class="fragment fade-down">Föredra rena funktioner, kan du undvika att skapa sideffekter eller mutera ett delat tillstånd, undvik det, sen går det inte alltid.</p>
+        <p class="fragment fade-down">Gruppera kod, först i funktioner, sen i moduler eller klasser (module/class)</p>
+      </section>
+    </section>
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '100%',
+      width: '80%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js', condition: function (){
+        return !document.body.classList;}
+      },
+      { src: 'plugin/notes/notes.js', async: true },
+      { src : 'lib/prismjs/prism.js'},
+      { src : 'js/print.js'}
+      ]
+    });
+  </script>
+</body>
+</html>
