@@ -1,0 +1,358 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="Node">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> Node </title>
+  <script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+<style type="text/css">
+  pre[class*="language-"]{
+    margin: 3rem auto;
+  }
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- NODE INTRO -->
+      <section>
+        <section>
+          <h1><strong>NODE</strong></h1>
+        </section>
+        <section data-background-image="http://i.imgur.com/0GEgv.gif">.</section>
+        <section>
+          <h3><em>JavaScript</em></h3>
+          <p>Skapat under <em>10</em> dagar av Brendan Eich</p>
+          <p class="fragment fade-down">För att ge Netscape ett övertag</p>
+          <p class="fragment fade-down">Client-side, körde bara via browsern</p>
+        </section>
+        <section>
+          <blockquote>
+            Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an <em>event-driven, non-blocking I/O model</em> that makes it lightweight and efficient. Node.js' package ecosystem, npm, is the largest ecosystem of open source libraries in the world.
+          </blockquote>
+        </section>
+        <section>
+          <p>Node.js plockar tolken (Chrome's V8) från browsern och gör så att den kan köras utan browsern.</p>
+          <p class="fragment fade-down">Vi får JavaScript som kan köras server-side</p>
+        </section>
+        <section>
+            <p>Inget visuellt, html/css</p>
+            <p>Bara JavaScript</p>
+            <p class="fragment fade-down">Ingen DOM</p>
+            <p class="fragment fade-down">Ingen <strong>index.html</strong> som kopplar samman våra filer</p>
+        </section>
+        <section>
+          <h3><strong>Command Line Interface</strong></h3>
+          <p>När ett program har ett grafiskt gränssnitt snackar man om <em>GUI </em> (Graphical User Interface)</p>
+          <p>Vi använder oss utav flera olika program som körs från terminalen: <em>CLI </em> (Command Line Interface)</p>
+        </section>
+        <section>
+          <h3><a href="https://nodejs.org/en/">Nodejs.org</a></h3>
+        </section>
+        <section data-background-image="https://i.imgur.com/U857k4h.png">
+          .
+        </section>
+      </section>
+      <section>
+        <section>
+          <h1><strong>NPM</strong></h1>
+          <p>Node Package Manager</p>
+        </section>
+        <section>
+          <p>I nodes ekosystem ingår <em>NPM</em> som är ett program för att installera paket.</p>
+          <h3><a href="https://www.npmjs.com/">npmjs.org</a></h3>
+        </section>
+        <section>
+          <h3>Package/module/library</h3>
+          <p>Färdigpaketerad kod som har en specifik uppgift att utföra</p>
+          <p class="fragment fade-down">Ett paket kan t.ex. vara en funktion.</p>
+          <p class="fragment fade-down">Moduler bygger på andra moduler: <em>dependencies</em></p>
+        </section>
+        <section>
+          <p><em>node</em> bygger på moduler</p>
+          <p>Men inte bara nerladdade moduler</p>
+          <p class="fragment fade-down">Vi kan skapa våra egna moduler, dela upp vår kod i moduler.</p>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h1><strong>Module system</strong></h1>
+        </section>
+        <section>
+          <img src="https://i.imgur.com/ybBnMDW.png" alt="Node runs">
+        </section>
+        <section>
+          <p>Det som länkar samman <em>node</em>-kod är dess modul-system</p>
+          <p class="fragment fade-down">Varje modul får ett eget <em>namespace</em></p>
+          <p class="fragment fade-down">Vi kan välja exakt vad vi vill exportera</p>
+          <p class="fragment fade-down">Det finns ett <em>global</em> namespace</p>
+        </section>
+        <section>
+          <pre><code class="language-js">//app.js
+const myModule = require('./module.js');
+
+console.log(myModule.name); //'Jesper'
+myModule.sayHello();        //'Foolish mortals'</code></pre>
+          <pre><code class="language-js">//module.js
+const person = {
+  name: "Jesper",
+  sayHello: function(){
+    console.log('Foolish mortals');
+  }
+}
+module.exports = person;</code></pre>
+        </section>
+      </section>
+
+      <!-- HTTP -->
+
+      <section>
+        <section>
+          <h1><strong>HTTP</strong></h1>
+        </section>
+        <section data-transition="convex none">
+          <h3><em>Simple HTTP-server</em></h3>
+          <pre><code class="language-js">const http = require('http');
+
+http.createServer((req,res) => {
+
+  res.send("Hello!");
+  res.end();
+}).listen(4000);</code></pre>
+        </section>
+        <section data-transition="none">
+          <h3>Kan behöva sätta <em>headers</em></h3>
+          <pre><code class="language-js">const http = require('http');
+
+http.createServer((req,res) => {
+  <span class="fragment highlight-red">res.writeHead(200, {'Content-Type': 'text/html'});</span>  
+  res.send("Hello!");
+  res.end();
+}).listen(4000);</code></pre>
+        </section>
+        <section data-transition="none">
+          <h3>Vi kan såklart skicka mer innehåll</h3>
+          <pre><code class="language-js">const http = require('http');
+
+http.createServer((req,res) => {
+  res.writeHead(200, {'Content-Type': 'text/html'}); 
+  <span class="fragment highlight-red">res.send("&lt;h1&gt;Hello!&lt;/h1&gt;");</span>
+  <span class="fragment highlight-red">res.send("&lt;p&gt;Welcome to my krypin&lt;/p&gt;");</span>
+  res.end();
+}).listen(4000);</code></pre>
+        </section>
+        <section>
+          <p>Vi kan även göra enklare <em>get</em>-requests med http-modulen</p>
+          <pre><code class="language-js">http.get(url, callback);</code></pre>
+          <pre class="fragment fade-down"><code class="language-js">const http = require('http');
+http.get('http://localhost:4000', (response) => {
+  console.dir(response);
+});</code></pre>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h1><strong>NPM</strong></h1>
+        </section>
+        <section>
+          <p>Vi ska dock använda oss av andras moduler också</p>
+          <p class="fragment fade-down">Som tur är har nodes ekosystem ett inbyggt program som hanterar delningen åt oss</p>
+          <h3 class="fragment fade-down"><strong>NPM</strong></h3>
+        </section>
+        <section>
+          <p>Istället för att ladda ner en installationsfil och dubbelklicka på den så skriver vi ett kommando i terminalen som gör allting åt oss.</p>
+          <p class="fragment fade-down">Vi kan installera moduler globalt (som vanliga program) </p>
+          <p class="fragment fade-down">Och vi kan installera moduler lokalt, installeras enbart i den mappen man står i.</p>
+          <h3 class="fragment fade-down"><strong>KOLLA ALLTID VILKEN MAPP DU STÅR I!</strong></h3>
+        </section>
+        <section>
+          <h3><em>NPM INIT</em></h3>
+        </section>
+        <section>
+          <img src="https://i.imgur.com/la3QGVB.png" alt="npm init">
+        </section>
+        <section>
+          <img src="https://i.imgur.com/lVf0Rfd.png" alt="npm install">
+        </section>
+        <section>
+          <h3>Alla paket finns på npms hemsida</h3>
+          <h3><a href="https://www.npmjs.com/">https://www.npmjs.com</a></h3>
+          <p class="fragment fade-down">Samtliga brukar även ha en GitHub-sida</p>
+        </section>
+        </section>
+
+        <section>
+        <section>
+          <h1><strong>Read / Write</strong></h1>
+        </section>
+        <section>
+          <p>Man vill ju kunna läsa och skriva data från hårddisken: filer</p>
+          <p class="fragment fade-down">Express kommer att underlätta detta moment men först tar vi en titt på hur det sköts i bakgrunden i ren <em>node</em></p>
+          <pre class="fragment fade-down"><code class="language-js">const fs = require('fs'); //inbyggd modul</code></pre>
+          <a class="fragment fade-down" href="https://nodejs.org/api/fs.html">Node.js: fs</a>
+        </section>
+        <section>
+          <h3><em>The Big Four</em></h3>
+        </section>
+        <section>
+          <h3><em><code>fs.readFile()</code></em></h3>
+          <pre><code class="language-js">fs.readFile(file, options, callback)</code></pre>
+          <pre><code class="language-js">fs.readFile('file.txt', 'utf-8', (error, data) => {
+  if (error) console.log(error);
+  console.log(data);
+});</code></pre>
+        </section>
+        <section>
+        <h3><em><code>fs.writeFile()</code></em></h3>
+          <pre><code class="language-js">fs.writeFile(file, data, options, callback)</code></pre>
+          <pre><code class="language-js">let data ='Blorgons!!'
+fs.writeFile('file.txt', data, (error) => {
+  if (error) console.log(error);
+  console.log('Success!');
+});</code></pre>
+        </section>
+        <section>
+          <h3><em>fs.createReadStream();</em></h3>
+          <p><code>fs.readFile</code> samt <code>fs.writeFile</code> laddar in all data i minnet innan funktionen skriver/läser</p>
+          <p class="fragment fade-down">Funkar oftast, dock vi större filer kan vi få problem.</p>
+          <p class="fragment fade-down">Vi vill hellre filerna i delar som senare byggs ihop till en helhet: <em>stream</em></p>
+        </section>
+        <section data-transition="none">
+          <pre><code class="language-js">fs.createReadStream(file, options)</code></pre>
+          <pre><code style="min-height: 450px;" class="language-js"> //Create stream
+let streamable = fs.createReadStream('file.txt');
+let data = ''; //Somewhere to save the data
+
+
+
+
+
+</code></pre>
+        </section>
+        <section data-transition="none">
+          <pre><code class="language-js">fs.createReadStream(file, options)</code></pre>
+          <pre><code style="min-height: 450px;" class="language-js"> //Create stream
+let streamable = fs.createReadStream('file.txt');
+let data = ''; //Somewhere to save the data
+streamable.on('data', (chunk) => {
+  data += chunk; //sent in blocks of data!
+});
+
+
+</code></pre>
+        </section>
+        <section data-transition="none">
+          <pre><code class="language-js">fs.createReadStream(file, options)</code></pre>
+          <pre><code style="min-height: 450px;" class="language-js"> //Create stream
+let streamable = fs.createReadStream('file.txt');
+let <span class="fragment highlight-red visible">data</span> = ''; //Somewhere to save the data
+streamable.on('data', (chunk) => {
+  <span class="fragment highlight-red visible">data</span> += chunk; //sent in blocks of data!
+});
+streamable.on('end', () => { //It ends here!
+  console.log(<span class="fragment highlight-red">data</span>);
+});</code></pre>
+        </section>
+        <section data-transition="none">
+          <pre><code class="language-js">let dataToWrite = "Blorgons!!!";
+let writeStream = fs.createWriteStream('output.txt');
+
+
+
+
+</code></pre>
+        </section>
+        <section data-transition="none">
+          <pre><code class="language-js">let dataToWrite = "Blorgons!!!";
+let writeStream = fs.createWriteStream('output.txt');
+writeStream.write(dataToWrite, 'UTF8');
+
+
+
+</code></pre>
+        </section>
+        <section data-transition="none">
+          <pre><code class="language-js">let dataToWrite = "Blorgons!!!";
+let writeStream = fs.createWriteStream('output.txt');
+writeStream.write(dataToWrite, 'UTF8');
+writeStream.end();
+writeStream.on('finish', function(){
+  console.log("I just finished writing!");
+});</code></pre>
+        </section>
+        <section>
+          <h3><em>Två varianter</em></h3>
+          <p><code>fs.writeFileSync() / fs.readFileSync()</code></p>
+        </section>
+        <section>
+          <blockquote>Non-blocking event-driven I/0</blockquote>
+          <p class="fragment fade-down">Betyder att typ allt är async by default</p>
+          <p class="fragment fade-down">Vi har callbacks på t.ex. <code>fs.readFile()</code> för att koden är async</p>
+          <a class="fragment fade-down" href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">Must watch: What The Hell is the event loop anyway</a>
+        </section>
+        <section>
+          <p>Vi kan tvinga dessa två funktioner att bli synchronous</p>
+          <pre class="fragment fade-down"><code class="language-js">let data = fs.readFileSync('data.txt');</code></pre>
+          <pre class="fragment fade-down"><code class="language-js">fs.writeFileSync('data.txt', data);</code></pre>
+          <p class="fragment fade-down">Observera, inga callback</p>
+        </section>
+        <section>
+          <h3><em>att tänka på</em></h3>
+          <p>Options: encoding</p>
+          <pre><code class="language-js">fs.writeFileSync('data.txt','utf-8' , data)</code></pre>
+          <pre><code class="language-js">fs.readFileSync('data.txt','utf-8')</code></pre>
+        </section>
+      </section>
+      <section>
+        <a href="https://parceljs.org/getting_started.html">Parcel - Getting Started</a>
+        <a href="https://webpack.js.org/">Webpack</a>
+        <a href="https://github.com/mi-fed17/webpack-boilerplate">Webpack Boilerplate</a>
+        <p>Instruktioner för detta finns på GitHub + Zenit <em>17_bundler.md</em></p>
+        <p>+ extra instruktioner om du vill fördjupa dig i node: <em>16_node.md</em></p>
+      </section>
+
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '100%',
+      width: '80%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js', condition: function (){
+        return !document.body.classList;}
+      },
+      { src: 'plugin/notes/notes.js', async: true },
+      { src : 'lib/prismjs/prism.js'},
+      { src : 'js/print.js'}
+      ]
+    });
+  </script>
+</body>
+</html>
