@@ -1,0 +1,186 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="React">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> React </title>
+  <script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+<style type="text/css">
+  pre[class*="language-"]{
+    margin: 3rem auto;
+  }
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <section>
+          <h1 class="intro-text">React</h1>
+          <pre style="width: 50%; text-align:center;"><code  class="language-jsx">import React from 'react';</code></pre>
+        </section>
+      </section>
+      
+      <!-- CONTENT -->
+
+      <section>
+        <section>
+          <h3><em>A JavaScript library <br/> for building user interfaces</em></h3>
+          <p>- Facebook</p>
+        </section>
+        <section>
+          <ul>
+            <li>Skapat av Facebook för att skapa snabba gränssnitt</li>
+            <li class="fragment slide-down">Enbart <em>VIEW</em>, bryr sig bara om grässnittet.</li>
+            <li class="fragment slide-down">Inte mycket inbyggt: litet men kraftfullt API  </li>
+          </ul>
+        </section>
+        <section>
+          <img src="https://i.stack.imgur.com/dQukP.png" alt="MVC" />
+          <p class="fragment fade-down">Mycket är REN JS, inga konstiga abstraktioner</p>
+          <p class="fragment fade-down">Vi får väldigt lite på köpet, enbart ett sätt att enkelt hantera View</p>
+        </section>
+        <section>
+          <p><strong>Virtual DOM</strong></p>
+          <p class="fragment fade-down">DOM-uppdateringar är långsamma och kostsamma</p>
+          <p class="fragment fade-down">React har en avancerad algoritm som istället bestämmer om och vad som ska uppdateras</p>
+          <p class="fragment fade-down">Mindre och färre uppdatering, snabbare gränssnitt.</p>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h1><code><strong>React Components</strong></code></h1>
+        </section>
+        <section>
+          <p>React byggs upp av komponenter som antingen är ES6-classes eller funktioner</p>
+          <pre><code class="language-jsx">class App extends React.Component{
+  render(){
+    return(
+      &lt;div&gt;
+        &lt;h1&gt;Hej!&lt;/h1&gt;
+      &lt;/div&gt;
+    );
+  }
+}</code></pre>
+        </section>
+        <section>
+          <p>Komponenter kan också vara funktioner</p>
+          <pre><code class="language-jsx">function App() {
+  return(
+    &lt;div&gt;
+      &lt;h1&gt; Hej! &lt;/h1&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+        </section>
+        <section>
+          <pre><code class="language-jsx">render(){
+  return(
+    &lt;div&gt;
+      &lt;h1&gt;Hej!&lt;/h1&gt; //JSX!
+    &lt;/div&gt;
+  );
+}</code></pre>
+        <p class="fragment fade-down">Metod som returnerar <code><em>HTML?</em></code></p>
+        <p class="fragment fade-down">NEJ! <code><strong>JSX</strong></code>: JavaScript förklätt till HTML</p>
+        </section>
+        <section>
+          <p><strong>Viktigt</strong></p>
+          <p class="fragment fade-down">Funktioner som måste returnera något</p>
+          <p class="fragment fade-down"> Components must return a single root element.</p>
+          <p class="fragment fade-down">Stor bokstav på Komponenter</p>
+        </section>
+        <section>
+          <p><strong>JSX</strong></p>
+          <pre><code class="language-jsx">return(
+    &lt;div&gt;
+    &lt;/div&gt;
+);</code></pre>
+        <p class="fragment fade-down">Vad som egentligen händer</p>
+        <pre class="fragment fade-down"><code class="language-jsx">React.createElement(
+  'div',  //type of element
+  null    //no children :( so alone
+);</code></pre>
+        <p class="fragment fade-down">Funktion som returnerar <em>HTML</em></p>
+        </section>
+        <section>
+          <p>React bygger på Komponenter</p>
+          <p class="fragment fade-down">Varje komponent är i princip en funktion som returnerar andra funktioner</p>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h1><strong>Props</strong></h1>
+        </section>
+        <section>
+          <p>Props kan ses som argument till komponenter</p>
+          <p>Props är immutable, de får inte ändras av komponenten</p>
+          <p class="fragment fade-down">Props ska enbart skickas ned</p>
+        </section>
+        <section>
+          <pre><code class="language-jsx">function Header(props){
+  return &lt;h1&gt; { props.name } &lt;/h1&gt;;
+}</code></pre>
+          <pre><code class="language-jsx">function App(){
+  return &lt;Header name=&quot;Jesper&quot; /&gt;
+}</code></pre>
+        </section>
+        <section>
+          <p>Om komponenten är en <code><em>class</em></code> så lagras props i <code><strong>this.props</strong></code></p>
+          <pre><code class="language-jsx">class Header extends Component {
+  render(){
+    return &lt;h1&gt; {this.props.name } &lt;/h1&gt;;
+  }
+}</code></pre>
+        </section>
+        <section>
+          <p>Du kan skicka ner hur många props du vill</p>
+          <p>På samma sätt som du kan skicka med hur många argument du vill till en funktion</p>
+        </section>
+      </section>
+      
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '100%',
+      width: '80%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js', condition: function (){
+        return !document.body.classList;}
+      },
+      { src: 'plugin/notes/notes.js', async: true },
+      { src : 'lib/prismjs/prism.js'},
+      { src : 'js/print.js'}
+      ]
+    });
+  </script>
+</body>
+</html>
