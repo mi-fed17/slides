@@ -1,0 +1,241 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="React">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> React </title>
+  <script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+<style type="text/css">
+  pre[class*="language-"]{
+    margin: 3rem auto;
+  }
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+        <!-- INTRO SLIDE -->
+      <section>
+        <section>
+          <h1><strong>State, props & events</strong></h1>
+        </section>
+      </section>
+      
+      <!-- CONTENT -->
+
+      <section>
+        <section>
+          <p>En komponent är en ES6-klass som returnerar JSX</p>
+          <p class="fragment fade-down">JSX genererar HTML</p>
+          <pre><code class="language-jsx">class App extends Component{
+  render(){
+    return(
+      &lt;div&gt;
+        &lt;h1&gt;Hej!&lt;/h1&gt;
+      &lt;/div&gt;
+    );
+  }
+}</code></pre>
+        </section>
+        <section>
+          <p>Vi behöver inte returnera JSX, vi kan returnera en komponent som returerar JSX</p>
+          <pre><code class="language-jsx">import Header from './Header';
+class App extends Component{
+  render(){
+    return(
+      &lt;div&gt;
+        &lt;Header /&gt;
+      &lt;/div&gt;
+    );
+  }
+}</code></pre>  
+               
+        </section>
+        <section>
+          <p class="fragment fade-down">Modularitet! DEN ULTIMATA MAKTEN!</p> 
+          <img class="fragment fade-down" src="https://static.comicvine.com/uploads/original/10/109732/2060708-GenieJafar.jpg" alt="Modularitet">
+        </section>
+        <section>
+          <p>Vi hade också <code><em>props</em></code>, argument till dina komponenter</p>
+          <pre><code class="language-jsx">import Header from 'Header';
+class App extends Component{
+  render(){
+    return(
+      &lt;div&gt;
+        &lt;Header name=&quot;Jesper&quot; /&gt;
+      &lt;/div&gt;
+    );
+  }
+}</code></pre> 
+        </section>
+        <section>
+          <p>Alla props är tillgängliga i <code>this.props</code> </p>
+          <pre><code class="language-jsx">class Header extends Component{
+  render(){
+    return(
+      &lt;header&gt;
+        { /* "Jesper" */ }
+        { this.props.name }
+      &lt;/header&gt;
+    );
+  }
+}</code></pre> 
+        </section>
+        <section>
+          <p><code>props</code> är <em>immutable</em></p>
+          <p>Ska inte ändras av själva komponenter, enbart skickas nedåt</p>
+          <p>Hur ändrar vi props då? ...<strong>state</strong></p>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h1><em>State</em></h1>
+        </section>
+        <section>
+          <p>Varje class-komponent har både <em>state</em> och <strong>props</strong></p>
+          <p>Props får inte ändras i en komponent</p>
+          <p>State får ändras hejvilt, det kommer att spåra ur.</p>
+        </section>
+        <section>
+          <p><strong>Kom ihåg</strong></p>
+          <p class="fragment fade-down">Komponenter är bara funktioner</p>
+          <p class="fragment fade-down">State och props är bara objekt</p>
+          <p class="fragment fade-down"><em>State och props är argument till dina komponenter som bestämmer hur ditt gränsnitt ser ut vid ett visst tillfälle.</em></p>
+        </section>
+        <section>
+          <p>Varje gång <em>state</em> ändras kallas <code><strong>render()</strong></code> på automatiskt</p>
+          <p class="fragment fade-down">State skickas ner till underkomponenter och blir till props</p>
+          <p class="fragment fade-down">VARJE GÅNG state och props ändras så uppdateras ditt gränssnitt</p>
+        </section>
+        <section>
+          <p>state kan skrivas som en class property</p>
+          <pre><code class="language-jsx">class App extends Component{
+  state = {
+    name: "Steffe"
+  }
+  render(){
+    return &lt;h1&gt;{ this.state.name }&lt;/h1&gt;;
+  }
+}</code></pre>
+        </section>
+        <section>
+          <p>state ska enbart ändras genom <code>this.setState({})</code></p>
+          <pre><code class="language-jsx">class App extends Component{
+  state = {
+    name: 'Jesper'
+  }
+  changeState = () => {
+    this.setState({ name: 'Steffe' })
+  }
+  render(){
+    return &lt;h1&gt;{ this.state.name }&lt;/h1&gt;;
+  }
+}</code></pre>
+        </section>
+        <section>
+          <h3><em>Kodexempel</em></h3>
+        </section>
+      </section>
+            <section>
+        <section>
+          <h1><strong>Stateless components</strong></h1>
+        </section>
+        <section>
+          <p><code><em>ES6-classes</em></code> är bra för top-level components som ska hålla state och logik</p>
+          <p class="fragment fade-down">De flesta komponenter är dock inte så komplicerade</p>
+          <p class="fragment fade-down">Därför kan vi ersätta dem med "dumma komponenter"</p>
+        </section>
+        <section>
+          <pre><code class="language-jsx">function Header(props){
+  return(
+    &lt;h1&gt; {props.name} &lt;/h1&gt;
+  );
+}</code></pre>
+        <p class="fragment fade-down">Observera att dessa komponenter inte har tillgång till <code><em>this</em></code></p>
+        <p class="fragment fade-down">Kan fortfarande vara interaktiv, få events ovanifrån</p>
+        </section>
+        <section>
+          <p>Kompakt ES6-variant</p>
+          <pre><code class="language-jsx">const Header = props => &lt;h1&gt; {props.name} &lt;/h1&gt;</code></pre>
+          <pre class="fragment fade-down"><code class="language-jsx">import React from 'react';
+const Header = ({ name }) => &lt;h1&gt; { name } &lt;/h1&gt;
+export default Header;</code></pre>
+        
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <p><strong>Skapa innehåll dynamiskt</strong></p>
+        </section>
+
+        <section>
+          <p>Vanliga for-loopar går!</p>
+          <p class="fragment fade-down">Men oftast används:</p>
+          <ul class="fragment fade-down">
+            <li><code>map()</code></li>
+            <li><code>reduce()</code></li>
+            <li><code>filter()</code></li>
+          </ul>
+          <p class="fragment fade-down">Om man inte har koll på <code>map</code> kan man skapa en array där alla element lagras i och rendera ut det elementet!</p>
+        </section>
+
+        <section>
+          <p><em>React keys</em></p>
+          <p class="fragment fade-down">När vi skapar innehåll från arrayer förväntar sig React att kunna identifera varje element</p>
+          <p class="fragment fade-down">React kräver att man sätter en <code><em>key</em></code></p>
+          <pre class="fragment fade-down"><code class="language-jsx">let elements = array.map( (item, index ) => {
+  return &lt;li key={index} &gt; { item } &lt;/li&gt;;
+});</code></pre>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h2><em>Eftermiddagen</em></h2>
+          <p>Övningar som finns under 'exercises' @ GitHub</p>
+        </section>
+      </section>
+      
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '100%',
+      width: '80%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js', condition: function (){
+        return !document.body.classList;}
+      },
+      { src: 'plugin/notes/notes.js', async: true },
+      { src : 'lib/prismjs/prism.js'},
+      { src : 'js/print.js'}
+      ]
+    });
+  </script>
+</body>
+</html>
