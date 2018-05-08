@@ -1,0 +1,266 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="Async State">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> Async State </title>
+  <script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+<style type="text/css">
+  pre[class*="language-"]{
+    margin: 3rem auto;
+  }
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <!-- INTRO SLIDE -->
+      <section>
+        <section>
+          <h1><strong>React + Async</strong></h1>
+        </section>
+      </section>
+
+
+      <section>
+         <section>
+           <p>Informationen som hämtas och applikationen ska uppdateras när hämtningen är klar</p>
+           <p class="fragment fade-down">Ändringar i <strong>state</strong> triggar <em>alltid</em> en uppdatering på sidan</p>
+           <p class="fragment fade-down">State blir vår förvaring, vår låda att lägga alla variabler i.</p>
+         </section>
+         <section data-transition="none">
+           <pre><code class="language-jsx">const App = {
+
+
+
+
+
+
+
+
+
+
+}</code></pre>
+         </section>
+         <section data-transition="none">
+           <pre><code class="language-jsx">const App = {
+  state: {
+    data: []    //"global" state
+  }
+
+
+
+
+
+
+
+}</code></pre>
+         </section>
+         <section data-transition="none">
+           <pre><code class="language-jsx">const App = {
+  state: {
+    data: []    //"global" state
+  },
+  getDataFromApi: function(){
+    
+
+
+
+
+  }
+}</code></pre>
+         </section>
+         <section data-transition="none">
+           <pre><code class="language-jsx">const App = {
+  state: {
+    data: []    //"global" state
+  },
+  getDataFromApi: function(){
+    fetch("https://example.com")
+    .then(response => response.json())
+    .then(json => {
+      
+    })
+  }
+}</code></pre>
+         </section>
+         <section data-transition="none">
+           <pre><code class="language-jsx">const App = {
+  state: {
+    data: []    //"global" state
+  },
+  getDataFromApi: function(){
+    fetch("https://example.com")
+    .then(response => response.json())
+    .then(json => {
+      this.state.data = json;  //set global state
+    })
+  }
+}</code></pre>
+         </section>
+         
+        <section data-transition="none">
+           <pre><code class="language-jsx">class App extends React.Component {
+  state = {
+    data: [] //"global state"
+  }
+
+
+
+
+
+
+
+}</code></pre>
+         </section>
+         <section data-transition="none">
+           <pre><code class="language-jsx">class App extends React.Component {
+  state = {
+    data: [] //"global state"
+  }
+  getDataFromApi(){
+    fetch("https://example.com")
+    .then(response => response.json())
+    .then(json => {
+
+    })
+  }
+}</code></pre>
+         </section>
+         <section data-transition="none">
+           <pre><code class="language-jsx">class App extends React.Component {
+  state = {
+    data: [] //"global state"
+  }
+  getDataFromApi(){
+    fetch("https://example.com")
+    .then(response => response.json())
+    .then(json => {
+      this.setState({ data : json });  //set global state
+    })
+  }
+}</code></pre>
+         </section>
+         <section>
+           <p>Utifrån state får vi sedan rendera ut vårt innehåll</p>
+           <pre class="fragment fade-down"><code class="language-jsx">//App.js
+render(){
+  const list = this.state.data.map(item => 
+    &lt;li&gt; { item.name } &lt;/li&gt;
+  );
+  return (
+    &lt;div&gt;
+      { list }
+    &lt;/div&gt;
+  )
+}</code></pre>
+         </section>
+       </section>
+      
+      <!-- Component Lifecycle -->
+      <section> 
+        <section>
+          <h1><strong>Component Lifecycle</strong></h1>
+        </section>
+        <section>
+          <pre><code class="language-jsx">import React, { Component } from 'react';
+class App extends Component{}</code></pre>
+        <p class="fragment fade-down"><code><em>Component</em></code> har mycket mer än bara <code><em>render()</em></code></p>
+        <p class="fragment fade-down">Det MESTA kommer du inte behöva använda. Men det finns där.</p>
+        </section>
+        <section>
+          <p>Ett antal funktioner kallas på automatiskt</p>
+          <p class="fragment fade-down">Behöver vi inte funktionen, skriv inte ut!</p>
+          <p class="fragment fade-down">Mest användbara är <code><em>componentDidMount()</em></code></p>
+        </section>
+        <section>
+          <img style="min-height: 550px; background: none;" src="http://i.imgur.com/fa5UbJM.png" alt="Component Lifecycle">
+        </section>
+        <section>
+          <p>Det vi behöver:</p>
+          <pre><code class="language-jsx">componentDidMount(){}</code></pre>
+          <p class="fragment fade-down">En såkallad <strong>Lifecycle method</strong></p>
+          <p class="fragment fade-down">En komponent monteras, renderas, uppdateras och när den inte ska finnas längre: avmonteras.</p>
+          <p class="fragment fade-down">Den har en livscykel, den lever och dör som allt annat</p>
+          <p class="fragment fade-down">Det finns speciella funktioner som körs på olika delar av livsspannet</p>
+        </section>
+        <section>
+          <pre><code class="language-jsx">componentDidMount(){
+  fetch("https://example.com")
+  .then(response => response.json())
+  .then(data => {
+    this.setState({ items: data });
+  });
+}</code></pre>
+        <p class="fragment fade-down">JSON måste plockas ut ur vårt response som är ett promise.</p>
+      </section>
+        <section>
+          <pre><code style="max-height: 470px"class="language-jsx">class App extends Component {
+  state = { 
+
+  }
+  componentDidMount(){
+  }
+  render(){
+  
+  } 
+}</code></pre>
+        </section>
+        <section>
+          <pre><code class="language-jsx">class App extends Component {
+  state = { }
+  componentDidMount(){ }
+  myOwnSuperMethod = () => { }
+  render(){ } 
+}</code></pre>
+        <p class="fragment fade-down">Observera pilarna på den egna funktionen men inte på de inbyggda</p> 
+        </section>
+        <section>
+          <p>Om vi hämtar informationen i <code>componentDidMount()</code> sker koden automatiskt och vi vet att komponenten finns</p>
+          <p class="fragment fade-down">Så kalla inte på föregående kod i konstruktorn, det kan gå fel och är onödigt p.ga. orsaker. 🤖</p>
+        </section>
+      </section>
+       
+      
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '100%',
+      width: '80%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js', condition: function (){
+        return !document.body.classList;}
+      },
+      { src: 'plugin/notes/notes.js', async: true },
+      { src : 'lib/prismjs/prism.js'},
+      { src : 'js/print.js'}
+      ]
+    });
+  </script>
+</body>
+</html>
